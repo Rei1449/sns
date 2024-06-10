@@ -13,12 +13,14 @@ docker-compose up -d
 #h1 gitのコマンド。久保田が知っているやつ。  
 ##h2 git  
 
-:星1:他の人の変更を自分のところに反映する。  
+
+
+*他の人の変更を自分のところに反映する。*  
 GitHubの:緑の丸特大:のコードの下のボタン（再読み込みみたいな）を押して、コードを入力。  
 git pull origin main    
 
 
-どっかー（:クジラ:さん）起動をする。  
+どっかークジラさん起動をする。  
 docker-compose up -d    
 
 変更されているか確認できる。  
@@ -28,13 +30,13 @@ git status
 code .     
 
 
-:星1:自分の変更を申請する　　
+自分の変更を申請する　　
 git add .  
 git commit -m "test久保田"  
 git push origin main  
-:緑の丸特大:のボタンをぽちぽちしていく。  
+のボタンをぽちぽちしていく。  
 
 
-:星1:その他  
+その他  
 （fetchとpushする先の確認）git remote -v  
 
