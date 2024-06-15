@@ -1,0 +1,6 @@
+.post {
+    width: 290px;
+    box-shadow: 10px 10px 30px -5px #828282;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);   
+}
