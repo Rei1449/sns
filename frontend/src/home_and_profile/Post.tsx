@@ -4,7 +4,7 @@ import { postData } from "../../../common/connectionData";
 export default function Post( data : postData ) {
     return (
         <div className="post">
-            <p>Title<br/>
+            <p>{data.userId}<br/>
             {data.content} </p>
         </div>
     )
