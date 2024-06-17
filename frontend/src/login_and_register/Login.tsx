@@ -8,9 +8,9 @@ export default function Login() {
 
 export function AccountDataForm() {
     return (
-        <div>
+        <div className="accountDataForm">
             <form>
-                <textarea /><br/>
+                <input/><br/>
                 <button>提出</button>
             </form>
         </div>
