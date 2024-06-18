@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { postData } from "../../../common/connectionData";
 import Post from "./Post";
-import getJson from "@/utils/utils";
+import {getFetchJson} from "@/utils/utils";
 
 
 export default function Timeline() {
@@ -27,7 +27,7 @@ export default function Timeline() {
 
     // ポストを取得しpostsに追加する
     const getPosts = async(url:string) => {
-        await getJson<postData[]>(url);
+        await getFetchJson<postData[]>(url);
         //const testData :postData = { content: 'テスト' };
         setPosts( (prePosts) => [ ...prePosts,  testData] );
     }
