@@ -8,7 +8,15 @@ export type postData = {
 }
 
 // ログイン＆登録に使用するデータ型
-export type accountData = {
+export type loginData = {
     email: string;
-    password: string;
+    password: string;   //ハッシュ値で送ると良い
+}
+
+// プロファイルなどに使用するユーザーデータ
+export type userData = {
+    id:number;
+    name:string;
+    createAt:number;
+    updateAt:number;
 }
