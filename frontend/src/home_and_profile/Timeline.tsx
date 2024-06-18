@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { postData } from "../../../common/connectionData";
 import Post from "./Post";
+import getJson from "@/utils/utils";
 
 
 export default function Timeline() {
@@ -26,11 +27,7 @@ export default function Timeline() {
 
     // ポストを取得しpostsに追加する
     const getPosts = async(url:string) => {
-        const res = await fetch(url)
-        if (!res.ok) {
-            console.error('エラーが発生しました。ステータスコード：' + res.statusText);
-        }
-        const data:postData[] = await res.json();
+        await getJson<postData[]>(url);
         //const testData :postData = { content: 'テスト' };
         setPosts( (prePosts) => [ ...prePosts,  testData] );
     }
