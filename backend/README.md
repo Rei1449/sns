@@ -1,6 +1,9 @@
 # DB・テーブル作成
+
 DBを手動（ドッカーではなく）で勝手に作って、そこを保存先にしているので以下のコマンドをお願いします。
+
 ## DB作成
+
 ```bash
 # ドッカーのsns_postgres-dbコンテナのExecにて
 $ psql -U postgres
@@ -14,10 +17,24 @@ postgres=# \c sns
 ```
 
 ## テーブル作成
+
 ```bash
 # sns_backend_containerで行って下さい
+$ yarn instale
 $ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
 ```
+
+
+
+
+
+
+
+
+
+
+以下はnestのreadMe
+
 
 
 ## Description
