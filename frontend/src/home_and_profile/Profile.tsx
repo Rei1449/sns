@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { userData } from "../../../common/connectionData";
 import Timeline from "./Timeline";
+import { getFetchJson } from "@/utils/utils";
 
 export default function Profile() {
     return (
         <div>
+            <ProfileHeader />
             <Timeline />
         </div>
     )
@@ -12,22 +14,21 @@ export default function Profile() {
 
 // プロフフィールを表示するコンポーネント
 function ProfileHeader() {
+    const [profileData, setProfileData] = useState('a');
 
     useEffect(() => {
-        getProfile('url');
+        const getProfile = async() => {
+            const test:string = await getFetchJson<string>("http://localhost:3001");
+            console.log(test);
+            setProfileData(test);
+        }
+        getProfile();
     }, []);
 
     return (
         <div>
-            <p>ここにユーザーのデータが表示される</p>
+            <p>ここにユーザーのデータが表示される<br/>
+            { profileData }</p>
         </div>
     )
-
-    const getProfile = async(url:string) => {
-        const res = await fetch(url)
-        if (!res.ok) {
-            console.error('エラーが発生しました。ステータスコード：' + res.statusText);
-        }
-        return await res.json();
-    }
 }
