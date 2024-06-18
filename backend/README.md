@@ -16,8 +16,20 @@ postgres=# \c sns
 ## テーブル作成
 ```bash
 # sns_backend_containerで行って下さい
+$ yarn add typeorm @nestjs/typeorm pg class-transformer class-validator
 $ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
 ```
+
+
+
+
+
+
+
+
+
+
+以下はnestのreadMe
 
 
 ## Description
