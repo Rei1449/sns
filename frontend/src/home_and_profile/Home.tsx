@@ -3,6 +3,7 @@ import Login from '../login_and_register/Login.tsx';
 import Register from '../login_and_register/Register.tsx';
 import Timeline from './Timeline.tsx';
 import CreatePost from './CreatePost.tsx';
+import './Home.css'
 
 export default function Home() {
     return (
@@ -22,6 +23,13 @@ export default function Home() {
             
             <h1>プロフ画面</h1>
             <Profile />
+
+            <div className="box">
+                <span className="box-title">ここにタイトル</span>
+                <p>ここに文章。タイトルのところに長い文章を書くとスタイルが崩れるらしい。最大何文字なのか、どうやって対応していけば良いのかは後で考えれば良いのかな？それともそもそも枠なんて必要ないのかしら？</p>
+            </div>
         </div>
+        
+        
     )
 }
