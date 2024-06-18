@@ -24,6 +24,19 @@ $ yarn instale
 $ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
 ```
 
+
+
+
+
+
+
+
+
+
+以下はnestのreadMe
+
+
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
