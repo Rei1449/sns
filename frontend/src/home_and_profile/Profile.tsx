@@ -2,19 +2,28 @@ import { useEffect, useState } from "react";
 import { userData } from "../../../common/connectionData";
 import Timeline from "./Timeline";
 import { getFetchJson } from "@/utils/utils";
+import { useParams } from "react-router-dom";
 
+// 各ユーザーのプロフィール画面
 export default function Profile() {
+    const { userId } = useParams<{ userId:string }>();
+
+    useEffect(() => {
+        console.log( userId );
+    }, [userId]);
+
     return (
         <div>
+            <h1>プロフ画面 userId={userId}</h1>
             <ProfileHeader />
             <Timeline />
         </div>
     )
 }
 
-// プロフフィールを表示するコンポーネント
+// プロフィールを表示するコンポーネント
 function ProfileHeader() {
-    const [profileData, setProfileData] = useState('a');
+    const [profileData, setProfileData] = useState('プロフィール');
 
     useEffect(() => {
         const getProfile = async() => {
