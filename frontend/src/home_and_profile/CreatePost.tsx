@@ -1,6 +1,6 @@
 export default function CreatePost() {
     return (
-        <div className="createPost">
+        <div className="create-post">
             // Todo: react hook formで投稿できるようにする
             <form>
                 <textarea />

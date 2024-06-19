@@ -1,28 +1,28 @@
-import Profile from './Profile.tsx';
-import Login from '../login_and_register/Login.tsx';
-import Register from '../login_and_register/Register.tsx';
 import Timeline from './Timeline.tsx';
 import CreatePost from './CreatePost.tsx';
 import './Home.css'
+import { Link } from 'react-router-dom';
+import MenuBar from './MenuBar.tsx';
 
 export default function Home() {
     return (
         <div>
             <h1> ホーム画面 </h1>
-            <h2> 機能 </h2>
-            <p> タイムライン<br/>
-            ここに投稿を順番に表示する</p>
+            <br/>
+            <p>メニューバー</p>
+            <MenuBar />
+            <br/>
+            <p> 投稿用コンポーネント </p>
             <CreatePost />
+            <br/>
+            <p> タイムライン <br/>
+            ここに投稿を順番に表示する</p>
             <Timeline />
-
-            <h1>ログイン画面</h1>
-            <Login />
-
-            <h1>登録画面</h1>
-            <Register />
-            
-            <h1>プロフ画面</h1>
-            <Profile />
+            <br/>
+            <p>以下、テスト用リンク</p>
+            <Link to="/login">ログイン画面</Link> <br/>
+            <Link to="/register">登録画面</Link> <br/>
+            <Link to="/profile/0">id=0のプロフィール画面</Link>
 
             <div className="box">
                 <span className="box-title">ここにタイトル</span>

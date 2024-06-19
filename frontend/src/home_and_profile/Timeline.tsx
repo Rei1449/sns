@@ -6,10 +6,11 @@ import {getFetchJson} from "@/utils/utils";
 
 export default function Timeline() {
     const [posts, setPosts] = useState<postData[]>([]);
+    const [postsSize, setPostsSize] = useState<number>(0);
 
     useEffect(() => {
         //ポストデータを初期化する
-        //一定量のポストを取得する
+        //ポストを取得する
     }, []);
 
     const testData:postData = {
@@ -30,5 +31,6 @@ export default function Timeline() {
         await getFetchJson<postData[]>(url);
         //const testData :postData = { content: 'テスト' };
         setPosts( (prePosts) => [ ...prePosts,  testData] );
+        setPostsSize( (s) => s++ );
     }
 }
