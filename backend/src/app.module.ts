@@ -23,7 +23,7 @@ import { Post } from './entities/post.entity';
       // migrations: ['src/migration/*.ts'],  // こいつが悪さしてる？
     }),
     UsersModule,
-    // PostsModule
+    PostsModule
   ],
   controllers: [AppController],
   providers: [AppService],

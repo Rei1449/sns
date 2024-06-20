@@ -26,6 +26,71 @@ $ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
 
 
 
+#　urlとデータタイプ
+
+## 投稿
+### 全件取得
+@Get
+/posts/all 
+```
+{
+    id: number,
+    content: string,
+    createdAt: Date,
+    updatedAt: Date,
+    userId: number
+} []
+```
+### userIdから取得
+@Get
+/posts/?userId= :number
+```
+{
+    id: number,
+    content: string,
+    createdAt: Date,
+    updatedAt: Date,
+    userId: number
+} []
+```
+### 投稿作成
+@Post
+/posts
+```
+{
+    content: string,
+    userId: number
+}
+```
+
+<br>
+<br>
+
+## アカウントユーザー
+### 全ユーザー取得
+@Get
+/users/all
+```
+{
+    id: number,
+    name: string,
+    createdAt: Date,
+    updatedAt: Date
+} []
+```
+### ユーザー1件取得
+@Get
+/users/?id= ユーザーid:number
+```
+{
+    id: number,
+    name: string,
+    email: string,
+    password: string,
+    createdAt: Date,
+    updatedAt: Date
+}
+```
 
 
 
