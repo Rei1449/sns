@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { postData } from "../../../common/connectionData";
+import { postData } from "../utils/connectionData";
 import Post from "./Post";
 import {getFetchJson} from "@/utils/utils";
 

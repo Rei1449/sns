@@ -6,19 +6,25 @@ import MenuBar from './MenuBar.tsx';
 
 export default function Home() {
     return (
-        <div>
-            <h1> ホーム画面 </h1>
-            <br/>
-            <p>メニューバー</p>
-            <MenuBar />
-            <br/>
-            <p> 投稿用コンポーネント </p>
-            <CreatePost />
-            <br/>
-            <p> タイムライン <br/>
-            ここに投稿を順番に表示する</p>
-            <Timeline />
-            <br/>
+        <div className='home'>
+            <h1> ホーム画面ヘッダー </h1>
+
+            <div className='flex'>
+                <div className='flex-auto'>
+                    <p>メニューバー</p>
+                    <MenuBar />
+                </div>
+            
+                <div className='flex-auto'>
+                    <p> 投稿用コンポーネント </p>
+                    <CreatePost />
+
+                    <p> タイムライン <br/>
+                    ここに投稿を順番に表示する</p>
+                    <Timeline />
+                </div>
+            </div>
+
             <p>以下、テスト用リンク</p>
             <Link to="/login">ログイン画面</Link> <br/>
             <Link to="/register">登録画面</Link> <br/>

@@ -9,7 +9,7 @@ export type postData = {
 
 // ログイン＆登録時にバックへ送信するデータ型
 export type loginData = {
-    name?: string;      //ログイン時はundefined
+    name?: string;
     email: string;
     password: string;   //ハッシュ値で送ると良い
 }

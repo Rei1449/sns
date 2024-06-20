@@ -1,5 +1,5 @@
 import './Post.css'
-import { postData } from "../../../common/connectionData";
+import { postData } from "../utils/connectionData";
 
 export default function Post( data : postData ) {
     return (
