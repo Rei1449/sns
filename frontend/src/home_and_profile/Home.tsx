@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button.tsx';
 
 export default function Home() {
     return (
+
         <div className='flex'>
             <div className='bg-red-800 w-30 h-1000 text-center sticky'>
                 <h2 className='homeH2'>メニューバー</h2>
