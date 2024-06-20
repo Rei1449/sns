@@ -22,6 +22,7 @@ export default function Timeline() {
     };
     return (
         <div className="timeline">
+            <p>メニューバー</p>
             <Post {...testData} /> {/* map(posts)で複数ポストを表示する */}
         </div>
     )

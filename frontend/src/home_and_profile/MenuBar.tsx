@@ -5,6 +5,7 @@ export default function MenuBar() {
 
     return (
         <div className="outline">
+            <p>メニューバー</p>
             <button onClick={ () => nav("/") }> ホーム </button>
         </div>
     )

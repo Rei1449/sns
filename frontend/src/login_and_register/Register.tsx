@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { LoginDataForm } from "./Login";
 import { loginData } from "../utils/connectionData";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/Button";
 
 // アカウント登録画面のコンポーネント
 export default function Register() {
