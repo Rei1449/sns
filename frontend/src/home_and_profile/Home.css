@@ -1,0 +1,25 @@
+.box {
+    position: relative;
+    margin: 2em 0;
+    padding: 0.5em 1em;
+    border: solid 3px #6e7276;
+    border-radius: 8px;
+}
+.box .box-title {
+    position: absolute;
+    display: inline-block;
+    top: -13px;
+    left: 10px;
+    padding: 0 9px;
+    line-height: 1;
+    font-size: 19px;
+    background: rgb(45,45,45);
+    color: rgb(147, 145, 145);
+    font-weight: bold;
+}
+.box p {
+    margin: 0; 
+    padding: 0;
+    color:rgb(147, 145, 145);
+    
+}

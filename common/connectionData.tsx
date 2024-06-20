@@ -7,8 +7,9 @@ export type postData = {
     userId:number;
 }
 
-// ログイン＆登録に使用するデータ型
+// ログイン＆登録時にバックへ送信するデータ型
 export type loginData = {
+    name?: string;      //ログイン時はundefined
     email: string;
     password: string;   //ハッシュ値で送ると良い
 }
@@ -17,6 +18,7 @@ export type loginData = {
 export type userData = {
     id:number;
     name:string;
+    email:string;
     createAt:number;
     updateAt:number;
 }
