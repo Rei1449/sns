@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { LoginDataForm } from "./Login";
-import { loginData } from "../../../common/connectionData";
+import { loginData } from "../utils/connectionData";
+import { Button } from "@/components/Button";
 
 // アカウント登録画面のコンポーネント
 export default function Register() {
@@ -13,8 +14,18 @@ export default function Register() {
                 // 提出時の動作を書く
                 console.log(data);
             })}>
+                <div className="form-item">
+                    <label>
+                        <span>Name：</span>
+                        <input
+                            type="text"
+                            {...register( "name", { required: true } )}
+                            placeholder="名前を入力してください"
+                        />
+                    </label>
+                </div>
                 <LoginDataForm reg={register}/>
-                <button type="submit"> 登録 </button>
+                <Button variant="outline" type="submit">登録</Button>
             </form>
         </div>
     )
