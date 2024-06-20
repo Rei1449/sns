@@ -7,7 +7,7 @@ import CreatePost from './CreatePost.tsx';
 export default function Home() {
     return (
         <div>
-            <h1> ホーム画面 </h1>
+            <h1 > ホーム画面 </h1>
             <h2> 機能 </h2>
             <p> タイムライン<br/>
             ここに投稿を順番に表示する</p>
