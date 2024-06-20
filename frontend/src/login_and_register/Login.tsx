@@ -1,9 +1,14 @@
 import { UseFormRegister, useForm } from "react-hook-form"
-import { loginData } from "../utils/connectionData";
 import { Button } from "@/components/ui/Button";
+
+export type loginData = {
+    email: string;
+    password: string;   //ハッシュ値で送ると良い
+}
 
 // ログイン画面のコンポーネント
 export default function Login() {
+    
     const { register, handleSubmit } = useForm<loginData>();
 
     return (
