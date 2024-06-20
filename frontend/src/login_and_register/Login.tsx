@@ -1,5 +1,6 @@
 import { UseFormRegister, useForm } from "react-hook-form"
-import { loginData } from "../../../common/connectionData";
+import { loginData } from "../utils/connectionData";
+import { Button } from "@/components/Button";
 
 // ログイン画面のコンポーネント
 export default function Login() {
@@ -7,7 +8,6 @@ export default function Login() {
 
     return (
         <div className="account-data-form">
-
             <h1>ログイン画面</h1>
             <h2>Todo:バリテーションの追加<br/>
             ハッシュ化<br/>
@@ -17,19 +17,8 @@ export default function Login() {
                 // 提出時の動作を書く
                 console.log(data);
             })}>
-                <div className="form-item">
-                    <label>
-                        <span>Name：</span>
-                        <input
-                            type="text"
-                            {...register( "name", { required: true } )}
-                            placeholder="名前を入力してください"
-                        />
-                    </label>
-                </div>
                 <LoginDataForm reg={register}/>
-
-                <button type="submit"> ログイン </button>
+                <Button variant="outline" type="submit">ログイン</Button>
             </form>
         </div>
     )

@@ -4,7 +4,7 @@ export default function MenuBar() {
     const nav = useNavigate();
 
     return (
-        <div className="menubar">
+        <div className="outline">
             <button onClick={ () => nav("/") }> ホーム </button>
         </div>
     )
