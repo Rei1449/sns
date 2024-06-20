@@ -7,8 +7,7 @@ export type postData = {
     userId:number;
 }
 
-
-export default function Post( data : postData ) {
+export default function Post({ data }: { data:postData }) {
     return (
         <div className="post">
             <p>{data.userId}<br/>
