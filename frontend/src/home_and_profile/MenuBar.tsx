@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/Button";
 import { useNavigate } from "react-router-dom"
 
 export default function MenuBar() {
@@ -6,7 +7,7 @@ export default function MenuBar() {
     return (
         <div className="outline">
             <p>メニューバー</p>
-            <button onClick={ () => nav("/") }> ホーム </button>
+            <Button onClick={ () => nav("/") }> ホーム </Button>
         </div>
     )
 }

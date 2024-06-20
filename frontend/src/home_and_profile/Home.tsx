@@ -14,7 +14,7 @@ export default function Home() {
             </div>
             
             <div className="bg-green-800 w-70 h-1000 text-center ml-10">
-                <CreatePost />
+                <CreatePost createrId={'0'} />
                 <Timeline />
             </div>
 
@@ -32,7 +32,7 @@ export default function Home() {
                 aaaaa
             </div>
             <Button>test用クリック</Button>
-            
+
         </div>
     )
 }
