@@ -1,32 +1,53 @@
-import { useForm } from "react-hook-form";
-import { LoginDataForm } from "./Login";
-import { loginData } from "../utils/connectionData";
+import { UseFormReturn, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { EmailFormField, PWFormField } from "./Login";
 
 // アカウント登録画面のコンポーネント
 export default function Register() {
-    const { register, handleSubmit } = useForm<loginData>();
+    const formHook = useForm();
 
     return (
         <div className="account-data-form">
             <h1>登録画面</h1>
-            <form onSubmit={handleSubmit((data:loginData) => {
-                // 提出時の動作を書く
-                console.log(data);
-            })}>
-                <div className="form-item">
-                    <label>
-                        <span>Name：</span>
-                        <input
-                            type="text"
-                            {...register( "name", { required: true } )}
-                            placeholder="名前を入力してください"
-                        />
-                    </label>
-                </div>
-                <LoginDataForm reg={register}/>
-                <Button variant="outline" type="submit">登録</Button>
-            </form>
+            <Form {...formHook}>
+                <form onSubmit={formHook.handleSubmit((data) => {
+                    // 提出時の動作を書く
+                    console.log(data);
+                })}>
+
+                    <NameFormField form={formHook} />
+                    <EmailFormField form={formHook} />
+                    <PWFormField form={formHook} />
+                    
+                    <Button variant="outline" type="submit">登録</Button>
+
+                </form>
+            </Form>
         </div>
+    )
+}
+
+export function NameFormField({ form }: {form: UseFormReturn}) {
+    return (
+        <FormField
+        control={form.control}
+        name="name"
+        defaultValue=""
+        rules={{ required: '名前を入力してください' }}
+        render={({field}) => (
+            <FormItem>
+                <FormLabel> Name </FormLabel>
+                <FormControl>
+                    <Input
+                        type="text" 
+                        placeholder="名前"
+                        {...field}
+                    />
+                </FormControl>
+                <FormMessage />
+            </FormItem>
+        )}/>
     )
 }

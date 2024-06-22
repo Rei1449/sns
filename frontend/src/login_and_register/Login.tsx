@@ -1,59 +1,81 @@
-import { UseFormRegister, useForm } from "react-hook-form"
+import { UseFormReturn, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/Button";
-
-export type loginData = {
-    email: string;
-    password: string;   //ハッシュ値で送ると良い
-}
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription, Form } from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
 
 // ログイン画面のコンポーネント
 export default function Login() {
-    
-    const { register, handleSubmit } = useForm<loginData>();
+    const formHook = useForm();
 
     return (
-        <div className="account-data-form">
+        <div>
             <h1>ログイン画面</h1>
-            <h2>Todo:バリテーションの追加<br/>
-            ハッシュ化<br/>
-            エラー処理</h2>
+            <h2>Todo:ハッシュ化</h2>
 
-            <form onSubmit={handleSubmit((data:loginData) => {
-                // 提出時の動作を書く
-                console.log(data);
-            })}>
-                <LoginDataForm reg={register}/>
-                <Button variant="outline" type="submit">ログイン</Button>
-            </form>
+            <Form {...formHook}>
+                <form onSubmit={formHook.handleSubmit((data) => {
+                    // 提出時の動作を書く
+                    console.log(data);
+                })}>
+
+                    <EmailFormField form={formHook}/>
+                    <PWFormField form={formHook}/>
+
+                    <Button variant="outline" type="submit">ログイン</Button>
+
+                </form>
+            </Form>
         </div>
     )
 }
 
 // メールアドレスとパスワードのみの入力フォーム
-export function LoginDataForm({ reg }: {reg:UseFormRegister<loginData>}) {
+export function EmailFormField({ form }: {form: UseFormReturn}) {
     return (
-        <>
-        <div className="form-item">
-            <label>
-                <span>E-Mail：</span>
-                <input
-                    type="text"
-                    {...reg( "email", { required: true } )}
-                    placeholder="メールアドレスを入力してください"
-                />
-            </label>
-        </div>
+        <FormField
+        control={form.control}
+        name="email"
+        defaultValue=""
+        rules={{ required: "メールアドレスを入力してください。" }}
+        render={({field}) => (
+            <FormItem>
+                <FormLabel> E-Mail </FormLabel>
+                <FormControl>
+                    <Input
+                        type="email" 
+                        placeholder="メールアドレス"
+                        {...field}
+                    />
+                </FormControl>
+                <FormMessage />
+            </FormItem>
+        )}/>
+    )
+}
 
-        <div className="form-item">
-            <label>
-                <span>Password：</span>
-                <input
-                    type="text"
-                    {...reg( "password", { required: true } )}
-                    placeholder="パスワードを入力してください"
-                />
-            </label>
-        </div>
-        </>
+export function PWFormField({ form }: {form: UseFormReturn}) {
+    return (
+        <FormField
+        control={form.control}
+        name="password"
+        defaultValue=""
+        rules={{ required:'パスワードを入力してください。',
+                 minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
+                 maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
+                 pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'} }}
+        render={({ field }) => (
+            <FormItem>
+                <FormLabel> Password </FormLabel>
+                <FormControl>
+                    <Input
+                        type="text" 
+                        placeholder="パスワード"
+                        {...field}
+                    />
+                </FormControl>
+                <FormDescription />
+                <FormMessage />
+            </FormItem>
+        )}/>
     )
 }
