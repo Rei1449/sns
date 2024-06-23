@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { userData } from "../utils/connectionData";
 import Timeline from "./Timeline";
 import { getFetchJson } from "@/utils/utils";
 import { useParams } from "react-router-dom";

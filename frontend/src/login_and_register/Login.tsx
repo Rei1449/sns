@@ -16,7 +16,7 @@ export default function Login() {
 
     return (
         <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl p-10">
-            <h1>ログイン画面</h1>
+            <h1>ログイン</h1>
             <h2>Todo:ハッシュ化</h2>
             <br/>
 
@@ -28,7 +28,7 @@ export default function Login() {
 
                     <div className="flex flex-row-reverse justify-between">
                         <Button
-                            variant="outline"
+                            variant="default"
                             type="submit"> ログイン </Button>
                         <Button
                             variant="outline"

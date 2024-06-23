@@ -12,7 +12,7 @@ export default function Register() {
 
     return (
         <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl p-10">
-            <h1>登録画面</h1>
+            <h1>新規登録</h1>
             <br/>
             <Form {...formHook}>
                 <form onSubmit={formHook.handleSubmit((data) => {
@@ -26,7 +26,7 @@ export default function Register() {
 
                     <div className="flex flex-row-reverse justify-between">
                         <Button
-                            variant="outline"
+                            variant="default"
                             type="submit"> 登録 </Button>
                         <Button
                             variant="outline"
