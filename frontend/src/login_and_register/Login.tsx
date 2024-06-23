@@ -2,26 +2,38 @@ import { UseFormReturn, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/Button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription, Form } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
+import { useNavigate } from "react-router-dom";
 
 // ログイン画面のコンポーネント
 export default function Login() {
     const formHook = useForm();
+    const nav = useNavigate();
+
+    const onSubmitForm = (data: any) => {
+        // 提出時の動作を書く
+        console.log(data);
+    }
 
     return (
-        <div>
+        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl p-10">
             <h1>ログイン画面</h1>
             <h2>Todo:ハッシュ化</h2>
+            <br/>
 
             <Form {...formHook}>
-                <form onSubmit={formHook.handleSubmit((data) => {
-                    // 提出時の動作を書く
-                    console.log(data);
-                })}>
+                <form onSubmit={formHook.handleSubmit(onSubmitForm)}>
 
                     <EmailFormField form={formHook}/>
                     <PWFormField form={formHook}/>
 
-                    <Button variant="outline" type="submit">ログイン</Button>
+                    <div className="flex flex-row-reverse justify-between">
+                        <Button
+                            variant="outline"
+                            type="submit"> ログイン </Button>
+                        <Button
+                            variant="outline"
+                            onClick={() => nav("/register")} > 新規登録 </Button>
+                    </div>
 
                 </form>
             </Form>
