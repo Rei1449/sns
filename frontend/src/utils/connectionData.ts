@@ -7,13 +7,6 @@ export type postData = {
     userId:number;
 }
 
-// ログイン＆登録時にバックへ送信するデータ型
-export type loginData = {
-    name?: string;
-    email: string;
-    password: string;   //ハッシュ値で送ると良い
-}
-
 // プロファイルなどに使用するユーザーデータ
 export type userData = {
     id:number;
