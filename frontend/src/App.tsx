@@ -1,4 +1,3 @@
-import './App.css'
 import Home from './home_and_profile/Home.tsx'
 import { Route, Routes } from 'react-router-dom'
 import Login from './login_and_register/Login.tsx'
@@ -8,7 +7,7 @@ import Notfound from './Notfound.tsx'
 
 function App() {
   return (
-    <div className="app">
+    <div>
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/login" element={ <Login /> } />
