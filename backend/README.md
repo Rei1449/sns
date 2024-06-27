@@ -20,7 +20,7 @@ postgres=# \c sns
 
 ```bash
 # sns_backend_containerで行って下さい
-$ yarn instale
+$ yarn install
 $ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
 ```
 
