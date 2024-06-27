@@ -37,8 +37,7 @@ export default function Timeline() {
         <div className="timeline">
             <p>タイムライン</p>
             <div>
-                { posts[0].id }
-                {/*<p>{posts[0].id}</p>*/}
+                { posts.map( (post) => post.content ) }
             </div>
         </div>
     )
