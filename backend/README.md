@@ -91,11 +91,19 @@ $ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
     updatedAt: Date
 }
 ```
+### ユーザー作成
+@Post
+/users
+{
+    name: string,
+    email: string,
+    password: string
+}
 
 
 
 
-
+<br>
 
 
 以下はnestのreadMe
