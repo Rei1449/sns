@@ -9,7 +9,7 @@ export type postData = {
 
 export default function Post({ data }: { data:postData }) {
     return (
-        <div className="post">
+        <div className="outline">
             <p>{data.userId}<br/>
             {data.content} </p>
         </div>
