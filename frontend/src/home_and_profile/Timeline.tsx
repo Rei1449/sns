@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import Post, { postData } from "./Post";
 import {getFetchJson} from "@/utils/utils";
 
-if (typeof window !== 'undefined') {
-    console.log('読み込みました');
-}
-
 const now:Date = new Date();
 const testPosts: postData[] = [{
     id:0,
@@ -28,10 +24,7 @@ export default function Timeline() {
             <p>test</p>
         })*/
         setPosts(testPosts);
-        console.log(posts);
     }, []);
-
-    const testf = () => {console.log(posts[0]); return 'aa'}
 
     return (
         <div className="timeline">
