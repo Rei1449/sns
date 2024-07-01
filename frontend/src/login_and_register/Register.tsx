@@ -4,21 +4,34 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/Input";
 import { EmailFormField, PWFormField } from "./Login";
 import { useNavigate } from "react-router-dom";
+import { postFetchJson } from "@/utils/utils";
 
 // アカウント登録画面のコンポーネント
 export default function Register() {
     const formHook = useForm();
     const nav = useNavigate();
+    
+    const isRegisterData = (arg: any) =>
+        typeof arg === "object" &&
+        arg !== null &&
+        typeof arg.name === "string" &&
+        typeof arg.email === "string" &&
+        typeof arg.password === "string";
+
+    const onSubmitForm = (data: any) => {
+        // 提出時の動作を書く
+        if( isRegisterData(data) ) {
+            console.log(data);
+            postFetchJson('http://localhost:3001/users', data);
+        } else { alert('登録データの型が間違っています') }
+    }
 
     return (
         <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl p-10">
             <h1>新規登録</h1>
             <br/>
             <Form {...formHook}>
-                <form onSubmit={formHook.handleSubmit((data) => {
-                    // 提出時の動作を書く
-                    console.log(data);
-                })}>
+                <form onSubmit={formHook.handleSubmit(onSubmitForm)}>
 
                     <NameFormField form={formHook} />
                     <EmailFormField form={formHook} />

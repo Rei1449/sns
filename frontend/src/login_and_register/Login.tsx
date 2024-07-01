@@ -9,9 +9,17 @@ export default function Login() {
     const formHook = useForm();
     const nav = useNavigate();
 
+    const isLoginData = (arg: any) =>
+        typeof arg === "object" &&
+        arg !== null &&
+        typeof arg.email === "string" &&
+        typeof arg.password === "string";
+
     const onSubmitForm = (data: any) => {
         // 提出時の動作を書く
-        console.log(data);
+        if ( isLoginData(data) ) {
+            console.log(data);
+        } else { alert('登録データの型が間違っています') }
     }
 
     return (
