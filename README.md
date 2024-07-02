@@ -47,4 +47,4 @@ git push origin main
 （fetchとpushする先の確認）git remote -v  
 
 ## ドキュメントくん
-https://drive.google.com/drive/folders/10T_KnFBnd6jCmweBKYclzHuc926NS0O3?usp=drive_link
+https://drive.google.com/drive/folders/1-XXOKrDFSoj0wcoVwcMnUN1UZSfzk93X?usp=drive_link
