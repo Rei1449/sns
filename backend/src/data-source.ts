@@ -5,13 +5,15 @@ import { Post } from "./entities/post.entity"
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
-    host: 'sns_postgres-db',
+    username: 'postgres.gjqrmubofcrkvikjvzwa',
+    password: 'Team4snsTakekawa',
+    database: 'postgres',
+    host: 'aws-0-ap-northeast-1.pooler.supabase.com',
     port: 5432,
-    username: 'postgres',
-    password: 'password',
-    database: 'sns',
+
+    logging: true,
     entities: [User, Post],
     synchronize: true,  // 本番環
-    logging: false,
+    // logging: false,
     migrations: ['src/migration/*.ts'],
 })

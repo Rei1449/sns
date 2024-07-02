@@ -7,23 +7,41 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { DataSource } from 'typeorm';
 import { Post } from './entities/post.entity';
+import { TestModule } from './test/test.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'sns_postgres-db',
+      // url : 'https://oxcsqcxvwuajpgwydtzr.supabase.co',
+      // host : "postgresql://postgres.oxcsqcxvwuajpgwydtzr:Z-2003taichi@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres?pgbouncer=true",
+      // host: 'postgresql://postgres.gjqrmubofcrkvikjvzwa:Team4snsTakekawa@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres',
+      // host: 'gjqrmubofcrkvikjvzwa.supabase.co',
+
+      username: 'postgres.gjqrmubofcrkvikjvzwa',
+      password: 'Team4snsTakekawa',
+      database: 'postgres',
+      host: 'aws-0-ap-northeast-1.pooler.supabase.com',
       port: 5432,
-      username: 'postgres',
-      password: 'password',
-      database: 'sns',
+
+      logging: true,
+
+      // ドッカー
+      // host: 'sns_postgres-db',
+      // port: 5432,
+      // username: 'postgres',
+      // password: 'password',
+      // database: 'test_sns',
+
       entities: [User,Post],
-      // synchronize: true,  // 本番環境では使わない // downしてからだとエラーでる
+      synchronize: false,  // 本番環境では使わない // downしてからだとエラーでる
       // autoLoadEntities: true,   //  エンティティは自動的にロード
       // migrations: ['src/migration/*.ts'],  // こいつが悪さしてる？
     }),
     UsersModule,
-    PostsModule
+    PostsModule,
+    TestModule
   ],
   controllers: [AppController],
   providers: [AppService],
