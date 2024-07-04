@@ -4,7 +4,6 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescripti
 import { Input } from "@/components/ui/Input";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { getFetchJson } from "@/utils/utils";
 
 // ログイン画面のコンポーネント
 export default function Login() {
@@ -18,11 +17,11 @@ export default function Login() {
         typeof arg.email === "string" &&
         typeof arg.password === "string";
 
-    const onSubmitForm = async(data: any) => {
+    const onSubmitForm = (data: any) => {
         // 提出時の動作を書く
         console.log(data);
         if ( isLoginData(data) ) {
-            //const isAuth = await getFetchJson('http://localhost:3001/', data);
+            //const isAuth = await getFetchJson(URL, data); //実装時はasyncを追加
             // 本当はセッションIDが返ってくる
             setCookie('myId', 1, { maxAge : 3600 });
         } else { alert('登録データの型が間違っています') }

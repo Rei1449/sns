@@ -20,11 +20,11 @@ export default function Register() {
         typeof arg.email === "string" &&
         typeof arg.password === "string";
 
-    const onSubmitForm = async(data: any) => {
+    const onSubmitForm = (data: any) => {
         // 提出時の動作を書く
         if( isRegisterData(data) ) {
             console.log(data);
-            const isAuth = await postFetchJson('http://localhost:3001/users', data);
+            //const isAuth = await postFetchJson('http://localhost:3001/users', data); //実装時はasyncを追加
             // 本当はセッションIDが返ってくる
             setCookie('myId', 1, { maxAge : 3600 });
             /*認証されない場合どうやって画面に表示する？*/
