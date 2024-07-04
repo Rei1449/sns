@@ -4,8 +4,11 @@ import './Home.css'
 import { Link } from 'react-router-dom';
 import SideBar from './SideBar.tsx';
 import { Button } from '@/components/ui/Button.tsx';
+import { useCookies } from 'react-cookie';
 
-export default function Home() {
+export default function Home() {  
+    const [cookies] = useCookies();
+
     return (
         <div className='flex justify-center'>
             <div className='basis-32 outline'>
@@ -14,7 +17,7 @@ export default function Home() {
             
             <div className='flex-initial basis-2/3 outline'>
                 <div className="bg-green-800 w-70 h-1000 text-center">
-                    <CreatePost createrId = { 0 /*自分のid*/ } />
+                    <CreatePost createrId = { cookies.myId /*自分のid*/ } />
                     <Timeline />
                 </div>
 

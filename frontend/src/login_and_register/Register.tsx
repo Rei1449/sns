@@ -5,10 +5,12 @@ import { Input } from "@/components/ui/Input";
 import { EmailFormField, PWFormField } from "./Login";
 import { useNavigate } from "react-router-dom";
 import { postFetchJson } from "@/utils/utils";
+import { useCookies } from "react-cookie";
 
 // アカウント登録画面のコンポーネント
 export default function Register() {
     const formHook = useForm();
+    const [_, setCookie] = useCookies<string>(['']);
     const nav = useNavigate();
     
     const isRegisterData = (arg: any) =>
@@ -18,11 +20,14 @@ export default function Register() {
         typeof arg.email === "string" &&
         typeof arg.password === "string";
 
-    const onSubmitForm = (data: any) => {
+    const onSubmitForm = async(data: any) => {
         // 提出時の動作を書く
         if( isRegisterData(data) ) {
             console.log(data);
-            postFetchJson('http://localhost:3001/users', data);
+            const isAuth = await postFetchJson('http://localhost:3001/users', data);
+            // 本当はセッションIDが返ってくる
+            setCookie('myId', 1, { maxAge : 3600 });
+            /*認証されない場合どうやって画面に表示する？*/
         } else { alert('登録データの型が間違っています') }
     }
 
