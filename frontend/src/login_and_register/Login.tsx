@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/Button";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription, Form } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 // ログイン画面のコンポーネント
 export default function Login() {
     const formHook = useForm();
+    const [cookies, setCookie] = useCookies<string>(['']);
     const nav = useNavigate();
 
     const isLoginData = (arg: any) =>
@@ -17,8 +19,11 @@ export default function Login() {
 
     const onSubmitForm = (data: any) => {
         // 提出時の動作を書く
+        console.log(data);
         if ( isLoginData(data) ) {
-            console.log(data);
+            //const isAuth = await getFetchJson(URL, data); //実装時はasyncを追加
+            // 本当はセッションIDが返ってくる
+            setCookie('myId', 1, { maxAge : 3600 });
         } else { alert('登録データの型が間違っています') }
     }
 
