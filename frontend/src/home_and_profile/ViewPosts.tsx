@@ -1,20 +1,6 @@
 import { useEffect, useState } from "react";
 import Post, { postData } from "./Post";
-
-const now:Date = new Date();
-const testPosts: postData[] = [{
-    id:0,
-    content: 'テストデータです。あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ',
-    createAt:now,
-    updateAt:now,
-    userId:1,
-},{
-    id:1,
-    content: 'テストデータです。いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい',
-    createAt:now,
-    updateAt:now,
-    userId:1,
-}];
+import { testPosts } from "@/utils/testData";
 
 export default function ViewPosts() {
     const [posts, setPosts] = useState<postData[]>([]);
