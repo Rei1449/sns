@@ -9,9 +9,11 @@ export type postData = {
 
 export default function Post({ data }: { data:postData }) {
     return (
-        <div className="outline">
-            <p>{data.userId}<br/>
-            {data.content} </p>
+        <div className="p-3">
+            <div>userIDは{data.userId}、postIDは{data.id}、{data.createAt.toDateString()}</div>
+            <div className="rounded-md m-2 p-2 shadow-md">
+                {data.content}
+            </div>
         </div>
     )
 }

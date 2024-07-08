@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Timeline from "./Timeline";
+import ViewPosts from "./ViewPosts";
 import { getFetchJson } from "@/utils/utils";
 import { useParams } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function Profile() {
         <div>
             <h1>プロフ画面 userId={userId}</h1>
             <ProfileHeader />
-            <Timeline />
+            <ViewPosts />
         </div>
     )
 }
