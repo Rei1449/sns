@@ -1,13 +1,15 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 // import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Get } from '@nestjs/common';
 import { UserService } from './user.service';
+import { AuthGuard } from '../auth/auth.guard';
 
 // @ApiTags('users')
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
+    @UseGuards(AuthGuard)
     @Get('/all')
 //   @ApiResponse({
 //     status: 200,
