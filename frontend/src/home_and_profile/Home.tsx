@@ -12,24 +12,13 @@ export default function Home() {
                 <SideBar />
             </div>
             
-            <div className='flex-initial basis-2/3 outline'>
-                <div className="bg-green-800 w-70 h-1000 text-center">
-                    <CreatePost createrId = { 0 /*自分のid*/ } />
+            <div className='relative basis-2/3 outline'>
+                <div className="fixed bg-green-600 text-center">
+                    <CreatePost createrId = { 0 /*自分のid*/ } />   
+                </div>
+                <div className="bg-green-100 w-70 h-1000 text-center">
                     <Timeline />
                 </div>
-
-                <div className='box'>
-                    <span className='box-title'>ここにタイトル</span>
-                    <p>ここに文章。タイトルのところに長い文章を書くとスタイルが崩れるらしい。最大何文字なのか、どうやって対応していけば良いのかは後で考えれば良いのかな？それともそもそも枠なんて必要ないのかしら？</p>
-                </div>
-
-                <h2 className='homeH2'>以下、テスト用リンク</h2>
-                <Link to="/profile/0">id=0のプロフィール画面</Link>
-
-                <div className="bg-neutral-50 dark:bg-white">
-                    aaaaa
-                </div>
-                <Button>test用クリック</Button>
             </div>
         </div>
     )

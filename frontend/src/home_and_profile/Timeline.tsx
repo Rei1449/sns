@@ -36,8 +36,42 @@ export default function Timeline() {
     return (
         <div className="timeline">
             <p>タイムライン</p>
+            <p>ここに文章。本来はここにタイムラインの投稿をする。</p>
             <div>
                 { posts.map( (post) => post.content ) }
+            </div>
+
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>ここに文章。タイトルのところに長い文章を書くとスタイルが崩れるらしい。最大何文字なのか、どうやって対応していけば良いのかは後で考えれば良いのかな？それともそもそも枠なんて必要ないのかしら？</p>
+            </div>
+
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>タイムラインがここに表示された時、どのような画面になるのか確認しています。</p>
+            </div>
+
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>あと、スクロール時に投稿画面は表示されたまま（固定）にしたいけど、タイムラインの内容は流れるように（固定しない）したい。</p>
+            </div>
+
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>ここに文章。!!!？</p>
+            </div>
+
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>ここに文章。!!!!!？？</p>
+            </div>
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>ここに文章。!!!!!？？</p>
+            </div>
+            <div className='box'>
+                <span className='box-title'>ここにタイトル</span>
+                <p>ここに文章。!!!!!？？</p>
             </div>
         </div>
     )
