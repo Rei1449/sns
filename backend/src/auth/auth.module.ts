@@ -16,14 +16,14 @@ import { AuthGuard } from './auth.guard';
       signOptions: { expiresIn: '10m' }, //6h
     }),
   ],
-  // providers: [AuthService],
-  providers: [
-    AuthService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [AuthService],
+  // providers: [
+  //   AuthService,
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: AuthGuard,
+  //   },
+  // ],
   controllers: [AuthController],
   exports: [AuthService],
 })

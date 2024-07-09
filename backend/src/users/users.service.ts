@@ -23,5 +23,14 @@ export class UsersService {
 
     async findOne(username: string): Promise<User | undefined> {
         return this.users.find(user => user.username === username);
+        // const user = await this.prismaService.user.findUnique({
+        //     where: {email: email},
+        //     select: {
+        //         id: true,
+        //         email: true,
+        //         name: true,
+        //     },
+        // })
+        // return user;
     }
 }

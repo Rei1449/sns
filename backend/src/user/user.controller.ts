@@ -4,7 +4,7 @@ import { Get } from '@nestjs/common';
 import { UserService } from './user.service';
 
 // @ApiTags('users')
-@Controller('users')
+@Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
