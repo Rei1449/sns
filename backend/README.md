@@ -1,30 +1,17 @@
 # DB・テーブル作成
 
-DBを手動（ドッカーではなく）で勝手に作って、そこを保存先にしているので以下のコマンドをお願いします。
+```ターミナル
+// マイグレーションの実行　テーブルの作成
+npx prisma migrate deploy
 
-## DB作成
-
-```bash
-# ドッカーのsns_postgres-dbコンテナのExecにて
-$ psql -U postgres
-
-#　DB一覧の表示　snsがないことを確認
-postgres=# \l
-# snsを作成
-postgres=# CREATE DATABASE sns;
-#　DBの選択
-postgres=# \c sns
+// テストデータの挿入
+npx prisma db seed
 ```
 
-## テーブル作成
-
-```bash
-# sns_backend_containerで行って下さい
-$ yarn install
-$ npx typeorm-ts-node-commonjs migration:run -d src/data-source.ts
+モデルに変更を加えたら下記を実行してください
 ```
-
-
+npx prisma generate
+```
 
 #　urlとデータタイプ
 

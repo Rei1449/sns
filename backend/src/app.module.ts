@@ -1,33 +1,27 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+// import { ConfigModule } from '@nestjs/config';
+import { UserService } from './user/user.service';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
+import { PrismaService } from './prisma/prisma.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { PostsModule } from './posts/posts.module';
-import { DataSource } from 'typeorm';
-import { Post } from './entities/post.entity';
+
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'sns_postgres-db',
-      port: 5432,
-      username: 'postgres',
-      password: 'password',
-      database: 'sns',
-      entities: [User,Post],
-      // synchronize: true,  // 本番環境では使わない // downしてからだとエラーでる
-      // autoLoadEntities: true,   //  エンティティは自動的にロード
-      // migrations: ['src/migration/*.ts'],  // こいつが悪さしてる？
-    }),
-    UsersModule,
-    PostsModule
+    PrismaModule,
+    UserModule,
+    AuthModule,
+    UsersModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, UserController],
+  providers: [AppService, UserService, PrismaService],
 })
+
 export class AppModule {
-  constructor(private dataSource: DataSource) {}
+  // constructor(private dataSource: DataSource) {}
 }
