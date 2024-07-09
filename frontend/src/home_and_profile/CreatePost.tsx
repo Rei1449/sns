@@ -13,8 +13,8 @@ export default function CreatePost({ createrId } : { createrId:number }) {
     const formHook = useForm<sendData>({defaultValues:{userId:createrId, content:''}} );
 
     return (
-        <div className="create-post">
-
+        <div className="">
+            
             <Form {...formHook}>
             <form onSubmit={formHook.handleSubmit((data: sendData) => {
                 // 提出時の動作を書く
