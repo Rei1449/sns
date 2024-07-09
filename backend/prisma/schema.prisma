@@ -10,9 +10,15 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  url       = env("LOCAL_DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+  // schemas = ["public", "auth"]
 }
+
+// generator client {
+//   provider        = "prisma-client-js"
+//   previewFeatures = ["multiSchema"]
+// }
 
 model User {
   id    Int     @default(autoincrement()) @id
@@ -22,6 +28,8 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   posts Post[]
+
+  // @@schema("auth") // or @@schema("public")
 }
 
 model Post {

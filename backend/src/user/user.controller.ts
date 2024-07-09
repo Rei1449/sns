@@ -8,7 +8,7 @@ import { UserService } from './user.service';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Get()
+    @Get('/all')
 //   @ApiResponse({
 //     status: 200,
 //     description: 'ユーザを一覧表示',
