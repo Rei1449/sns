@@ -10,17 +10,17 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
+
     async signIn(
-        username: string,
+        email: string,
         pass: string,
     ): Promise<{ access_token: string }> {
-        const user = await this.usersService.findOne(username);
-        console.log("sinin");
+        const user = await this.usersService.findOne(email);
         if (user?.password !== pass) {
             // throw new UnauthorizedException();
             throw new UnauthorizedException("パスワードとアカウントが一致しませんでした。");
         }
-        const payload = { sub: user.userId, username: user.username };
+        const payload = { id: user.id, email: user.email };
         return {
             access_token: await this.jwtService.signAsync(payload),
         };
