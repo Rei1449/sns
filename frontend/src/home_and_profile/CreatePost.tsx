@@ -32,7 +32,7 @@ export default function CreatePost({ createrId } : { createrId:number }) {
                         <FormControl>
                             <Textarea
                                 placeholder="にゃ～と投稿します"
-                                className="resize-none bg-green-600"
+                                className="resize-none"
                                 {...field}
                             />
                         </FormControl>
