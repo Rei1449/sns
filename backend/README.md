@@ -1,5 +1,7 @@
 # DB・テーブル作成
 
+### backend　直下に.envファイル作ってください（）
+
 ```ターミナル
 // マイグレーションの実行　テーブルの作成
 npx prisma migrate deploy
@@ -15,7 +17,60 @@ npx prisma generate
 
 #　urlとデータタイプ
 
-## 投稿
+### ユーザー作成
+@Post
+/users/create
+```body
+{
+    name: string,
+    email: string,
+    password: string
+}
+```
+```リターン（例）
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJkQHQiLCJpYXQiOjE3MjA1MDYzNDAsImV4cCI6MTcyMDUwNjk0MH0.y8hfkr-cjjyrfN3SN_i3w0lVgy_LY72fh2Zx2AXuisQ"
+}
+```
+
+<br>
+
+### ログイン
+@Post
+/auth/login
+```body
+{
+    email: string,
+    password: string
+}
+```
+```リターン（例）
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJkQHQiLCJpYXQiOjE3MjA1MDYzNDAsImV4cCI6MTcyMDUwNjk0MH0.y8hfkr-cjjyrfN3SN_i3w0lVgy_LY72fh2Zx2AXuisQ"
+}
+```
+
+<br>
+
+### 自分のプロフィール取得（ログインしてから１０分）
+@Get
+/auth/profile
+```
+Auth Type Bearer Token
+送られてきたトークン
+```
+```リターン（例）
+{
+    id: number,
+    email: string,
+    ceratedAt: Date,
+    updatedAt: Date
+}
+```
+
+<br>
+
+<!-- ## 投稿
 ### 全件取得
 @Get
 /posts/all 
@@ -48,12 +103,12 @@ npx prisma generate
     content: string,
     userId: number
 }
-```
+``` -->
 
 <br>
 <br>
 
-## アカウントユーザー
+<!-- ## アカウントユーザー
 ### 全ユーザー取得
 @Get
 /users/all
@@ -77,15 +132,8 @@ npx prisma generate
     createdAt: Date,
     updatedAt: Date
 }
-```
-### ユーザー作成
-@Post
-/users
-{
-    name: string,
-    email: string,
-    password: string
-}
+``` -->
+
 
 
 
