@@ -5,9 +5,17 @@
 ```ターミナル
 // マイグレーションの実行　テーブルの作成
 npx prisma migrate deploy
+// リセット
+npx prisma migrate reset
 
 // テストデータの挿入
 npx prisma db seed
+```
+
+seedによって入るuserデータ
+```
+  1 | test@test | testUser1        | 2024-07-15 01:32:45.538 | 4e4afef8b587fac78ec294c90b595ecdf2b63a1bbe5e6ba7b1035702664b7ba5 | 2024-07-15 01:32:45.538
+  2 | demo@demo | テストユーザー２ | 2024-07-15 01:32:45.542 | fa80d22be7166f13e6523aa8f218ba43888447e0f5e57654169def8c982ea1d3 | 2024-07-15 01:32:45.542
 ```
 
 モデルに変更を加えたら下記を実行してください
