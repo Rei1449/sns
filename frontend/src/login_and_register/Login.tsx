@@ -21,12 +21,13 @@ export default function Login() {
     const onSubmitForm = async(data: any) => {
         // 提出時の動作を書く
         if ( isLoginData(data) ) {
-           // data.password = await hashTextSHA256(data.password);
-            console.log(data);
-            const isAuth = await postFetchJson('http://localhost:3001/auth/login', data);
-            console.log(isAuth);
-            // 本当はセッションIDが返ってくる
-            setCookie('myId', 1, { maxAge : 3600 });
+            data.password = await hashTextSHA256(data.password);
+            try {
+                const token: string = await postFetchJson<string>('http://localhost:3001/auth/login', data);
+                setCookie('myToken', token, { maxAge : 3600 });
+            } catch(e) {
+                alert(e);
+            }
         } else { alert('登録データの型が間違っています') }
     }
 

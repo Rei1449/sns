@@ -2,6 +2,9 @@ export async function getFetchJson<T>(url:string): Promise<T> {
     const res = await fetch(url, {
         method:"GET",
     });
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
     return await res.json();
 }
 
@@ -11,6 +14,9 @@ export async function postFetchJson<T>(url:string, data:object): Promise<T> {
         headers: {"Content-Type": "application/json",},
         body:JSON.stringify(data),
     });
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
     return await res.json();
 }
 
