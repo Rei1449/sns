@@ -89,9 +89,9 @@ export function PWFormField({ form }: {form: UseFormReturn}) {
         name="password"
         defaultValue=""
         rules={{ required:'パスワードを入力してください。',
-                 //minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
-                 //maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
-                 //pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
+                 minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
+                 maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
+                 pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
                  }}
         render={({ field }) => (
             <FormItem>
