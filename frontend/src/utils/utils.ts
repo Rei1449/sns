@@ -2,9 +2,6 @@ export async function getFetchJson<T>(url:string): Promise<T> {
     const res = await fetch(url, {
         method:"GET",
     });
-    if (!res.ok) {
-        console.error('エラーが発生しました。ステータスコード：' + res.statusText);
-    }
     return await res.json();
 }
 
