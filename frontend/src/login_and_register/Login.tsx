@@ -4,7 +4,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescripti
 import { Input } from "@/components/ui/Input";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { hashTextSHA256 } from "@/utils/utils";
+import { hashTextSHA256, postFetchJson } from "@/utils/utils";
 
 // ログイン画面のコンポーネント
 export default function Login() {
@@ -22,10 +22,12 @@ export default function Login() {
         // 提出時の動作を書く
         if ( isLoginData(data) ) {
             data.password = await hashTextSHA256(data.password);
-            console.log(data);
-            //const isAuth = await getFetchJson(URL, data);
-            // 本当はセッションIDが返ってくる
-            setCookie('myId', 1, { maxAge : 3600 });
+            try {
+                const token: string = await postFetchJson<string>('http://localhost:3001/auth/login', data);
+                setCookie('myToken', token, { maxAge : 3600 });
+            } catch(e) {
+                alert(e);
+            }
         } else { alert('登録データの型が間違っています') }
     }
 
@@ -89,7 +91,8 @@ export function PWFormField({ form }: {form: UseFormReturn}) {
         rules={{ required:'パスワードを入力してください。',
                  minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
                  maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
-                 pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'} }}
+                 pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
+                 }}
         render={({ field }) => (
             <FormItem>
                 <FormLabel> Password </FormLabel>

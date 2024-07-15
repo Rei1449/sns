@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { EmailFormField, PWFormField } from "./Login";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { hashTextSHA256 } from "@/utils/utils";
+import { hashTextSHA256, postFetchJson } from "@/utils/utils";
 
 // アカウント登録画面のコンポーネント
 export default function Register() {
@@ -24,11 +24,13 @@ export default function Register() {
         // 提出時の動作を書く
         if( isRegisterData(data) ) {
             data.password = await hashTextSHA256(data.password);
-            console.log(data);
-            //const isAuth = await postFetchJson('http://localhost:3001/users', data);
-            // 本当はセッションIDが返ってくる
-            setCookie('myId', 1, { maxAge : 3600 });
-            /*認証されない場合どうやって画面に表示する？*/
+            try {
+                const token: string = await postFetchJson<string>('http://localhost:3001/users/create', data);
+                setCookie('myToken', token, { maxAge : 3600 });
+            } catch(e) {
+                /*認証されない場合どうやって画面に表示する？*/
+                alert(e);
+            }
         } else { alert('登録データの型が間違っています') }
     }
 

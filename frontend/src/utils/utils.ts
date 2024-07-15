@@ -3,7 +3,7 @@ export async function getFetchJson<T>(url:string): Promise<T> {
         method:"GET",
     });
     if (!res.ok) {
-        console.error('エラーが発生しました。ステータスコード：' + res.statusText);
+        throw new Error(res.statusText);
     }
     return await res.json();
 }
@@ -15,7 +15,7 @@ export async function postFetchJson<T>(url:string, data:object): Promise<T> {
         body:JSON.stringify(data),
     });
     if (!res.ok) {
-        console.error('エラーが発生しました。ステータスコード：' + res.statusText);
+        throw new Error(res.statusText);
     }
     return await res.json();
 }

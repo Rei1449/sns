@@ -13,7 +13,7 @@ export default function Home() {
             </div>
             
             <div className='flex-initial basis-2/3 m-5'>
-                <CreatePost createrId = { cookies.myId } />
+                <CreatePost createrId = { cookies.myToken } />
                 <ViewPosts />
             </div>
         </div>
