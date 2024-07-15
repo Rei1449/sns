@@ -19,6 +19,7 @@ export class AuthService {
         if (user?.password !== pass) {
             // throw new UnauthorizedException();
             throw new UnauthorizedException("パスワードとアカウントが一致しませんでした。");
+            // throw new Error("不一致");
         }
         const payload = { id: user.id, email: user.email };
         return {
