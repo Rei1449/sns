@@ -47,4 +47,17 @@ export class UsersService {
         })
         return user;
     }
+
+    async getUserProfile(id:number){
+        const user = await this.prismaService.user.findUnique({
+            where: {id: id},
+            select: {
+                id: true,
+                name: true,
+                createdAt: true,
+                updatedAt: true
+            },
+        })
+        return user;
+    }
 }
