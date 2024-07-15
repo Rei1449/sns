@@ -1,5 +1,17 @@
 import { PrismaClient } from '@prisma/client';
+import {createHash} from 'crypto'
+
+const encryptSha256 = (str:string) => {
+    const hash = createHash('sha256');
+    hash.update(str);
+    return hash.digest('hex')
+}
+
+const pas1 = encryptSha256('test1test');
+const pas2 = encryptSha256('demo2demo');
+
 const prisma = new PrismaClient();
+
 async function main() {
     await prisma.user.upsert({
         where: { email: 'test@test' },
@@ -7,7 +19,7 @@ async function main() {
         create: {
             email: 'test@test',
             name: 'testUser1',
-            password: 'test',
+            password: pas1,
             posts: {
                 create: [
                     {
@@ -29,7 +41,7 @@ async function main() {
         create: {
             email: 'demo@demo',
             name: 'テストユーザー２',
-            password: 'demo',
+            password: pas2,
             posts: {
                 create: [
                     {
@@ -42,7 +54,6 @@ async function main() {
             },
         },
     });
-
 }
 
 main()
