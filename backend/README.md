@@ -40,6 +40,17 @@ npx prisma generate
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJkQHQiLCJpYXQiOjE3MjA1MDYzNDAsImV4cCI6MTcyMDUwNjk0MH0.y8hfkr-cjjyrfN3SN_i3w0lVgy_LY72fh2Zx2AXuisQ"
 }
 ```
+### ユーザー作成
+@Get
+/users/profile/?id=id
+```リターン
+{
+    id: number,
+    name: string,
+    createdAt: Date,
+    updatedAt: "2024-07-15T01:32:45.542Z"
+}
+```
 
 <br>
 
@@ -62,7 +73,7 @@ npx prisma generate
 
 ### 自分のプロフィール取得（ログインしてから１０分）
 @Get
-/auth/profile
+/auth/userdata
 ```
 Auth Type Bearer Token
 送られてきたトークン
