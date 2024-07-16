@@ -13,12 +13,14 @@ npx prisma db seed
 ```
 
 seedによって入るuserデータ
+
 ```
   1 | test@test | testUser1        | 2024-07-15 01:32:45.538 | 4e4afef8b587fac78ec294c90b595ecdf2b63a1bbe5e6ba7b1035702664b7ba5 | 2024-07-15 01:32:45.538
   2 | demo@demo | テストユーザー２ | 2024-07-15 01:32:45.542 | fa80d22be7166f13e6523aa8f218ba43888447e0f5e57654169def8c982ea1d3 | 2024-07-15 01:32:45.542
 ```
 
 モデルに変更を加えたら下記を実行してください
+
 ```
 npx prisma generate
 ```
@@ -26,8 +28,10 @@ npx prisma generate
 #　urlとデータタイプ
 
 ### ユーザー作成
+
 @Post
 /users/create
+
 ```body
 {
     name: string,
@@ -35,14 +39,18 @@ npx prisma generate
     password: string
 }
 ```
+
 ```リターン（例）
 {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJkQHQiLCJpYXQiOjE3MjA1MDYzNDAsImV4cCI6MTcyMDUwNjk0MH0.y8hfkr-cjjyrfN3SN_i3w0lVgy_LY72fh2Zx2AXuisQ"
 }
 ```
+
 ### ユーザー作成
+
 @Get
 /users/profile/?id=id
+
 ```リターン
 {
     id: number,
@@ -55,14 +63,17 @@ npx prisma generate
 <br>
 
 ### ログイン
+
 @Post
 /auth/login
+
 ```body
 {
     email: string,
     password: string
 }
 ```
+
 ```リターン（例）
 {
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJkQHQiLCJpYXQiOjE3MjA1MDYzNDAsImV4cCI6MTcyMDUwNjk0MH0.y8hfkr-cjjyrfN3SN_i3w0lVgy_LY72fh2Zx2AXuisQ"
@@ -72,12 +83,15 @@ npx prisma generate
 <br>
 
 ### 自分のプロフィール取得（ログインしてから１０分）
+
 @Get
 /auth/userdata
+
 ```
 Auth Type Bearer Token
 送られてきたトークン
 ```
+
 ```リターン（例）
 {
     id: number,
@@ -89,10 +103,11 @@ Auth Type Bearer Token
 
 <br>
 
-<!-- ## 投稿
-### 全件取得
+## 投稿
+
+<!-- ### 全件取得
 @Get
-/posts/all 
+/posts/all
 ```
 {
     id: number,
@@ -113,16 +128,29 @@ Auth Type Bearer Token
     updatedAt: Date,
     userId: number
 } []
-```
+``` -->
+
 ### 投稿作成
+
 @Post
 /posts
+
 ```
 {
     content: string,
     userId: number
 }
-``` -->
+```
+
+```リターン（例）
+{
+    id: number,
+    content: string,
+    ceratedAt: Date,
+    updatedAt: Date,
+    userLd: number
+}
+```
 
 <br>
 <br>
@@ -153,16 +181,9 @@ Auth Type Bearer Token
 }
 ``` -->
 
-
-
-
-
 <br>
 
-
 以下はnestのreadMe
-
-
 
 ## Description
 

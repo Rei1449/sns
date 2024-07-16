@@ -8,10 +8,6 @@ export class PostService {
         private prismaService: PrismaService,
     ) {}
 
-    getHello():string{
-        return "ハロー";
-    }
-
     async getAllPost(){
         const post = await this.prismaService.post.findMany({})
         return post;
