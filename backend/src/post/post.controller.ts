@@ -13,7 +13,8 @@ export class PostController {
       return newPost;
     }
 
-    @Get('/allpost')
+    //今は全件取得だが、今後は最新３０件とか、ランダム３０件とかになるらしい
+    @Get('/all')
     getAllPost(){
         return this.postService.getAllPost();
     }
