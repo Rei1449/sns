@@ -120,9 +120,13 @@ Auth Type Bearer Token
 } []
 ```
 
-<!-- ### userIdから取得
+### userIdから取得
+
+### 例 /?id=1
+
 @Get
-/posts/?userId= :number
+/posts/user/?id= id:number
+
 ```
 {
     id: number,
@@ -131,7 +135,7 @@ Auth Type Bearer Token
     updatedAt: Date,
     userId: number
 } []
-```  -->
+```
 
 ### 投稿作成
 
@@ -144,6 +148,23 @@ Auth Type Bearer Token
     userId: number
 }
 ```
+
+```リターン（例）
+{
+    id: number,
+    content: string,
+    ceratedAt: Date,
+    updatedAt: Date,
+    userLd: number
+}
+```
+
+### 投稿削除
+
+@Delete
+/posts/?id= :number
+
+例：/?id=1
 
 ```リターン（例）
 {
