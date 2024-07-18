@@ -13,6 +13,22 @@ export class PostService {
         return post;
     }
 
+    //特定のuserIdから投稿文を取得
+    async getUserPost(userId:number){
+        const userPost = await this.prismaService.post.findMany({
+            where:{userId: userId},
+            select:{
+                id:false,
+                content: true,
+                createdAt: true,
+                updatedAt:false,
+                userId:true,
+            },
+        })
+        return userPost;
+    }
+
+
     async createPost(reatePostDTO:createPostDTO){
         const newPost = await this.prismaService.post.create({
             data:{
@@ -23,5 +39,12 @@ export class PostService {
         return newPost;
     }
 
+    async deletePost(postId:number){
+        const deleteUserId = await this.prismaService.post.delete({
+            where:{id: postId},
+            //select:{userId:true},//こんなのない
+        })
+        return deleteUserId;
+        }
 
 }
