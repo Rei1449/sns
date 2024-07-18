@@ -105,9 +105,11 @@ Auth Type Bearer Token
 
 ## 投稿
 
-<!-- ### 全件取得
+### 全件取得
+
 @Get
 /posts/all
+
 ```
 {
     id: number,
@@ -117,7 +119,8 @@ Auth Type Bearer Token
     userId: number
 } []
 ```
-### userIdから取得
+
+<!-- ### userIdから取得
 @Get
 /posts/?userId= :number
 ```
@@ -128,7 +131,7 @@ Auth Type Bearer Token
     updatedAt: Date,
     userId: number
 } []
-``` -->
+```  -->
 
 ### 投稿作成
 
