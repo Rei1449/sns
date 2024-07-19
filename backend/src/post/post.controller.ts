@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Query, Get, Post, Body, HttpCode, HttpStatus, Delete } from '@nestjs/common';
 import { PostService } from './post.service';
 import { createPostDTO } from 'src/dto/post.dto';
 
@@ -13,9 +13,25 @@ export class PostController {
       return newPost;
     }
 
-    @Get('/allpost')
-    getAllPost(){
-        return this.postService.getAllPost();
+    //idがstring型注意,指定の仕方例：/?id=1
+    @Delete()
+    deletePost(@Query('id') id:string){
+        return this.postService.deletePost(Number(id));
     }
+
+    //今は全件取得だが、今後は最新３０件とか、ランダム３０件とかになるらしい
+    @Get('/all')
+    getAllPost(){
+      return this.postService.getAllPost();
+    }
+
+    //idがstring型注意,指定の仕方例：user/?id=1
+    @Get('/user')
+    getUserPost(@Query('id') id:string){
+      return this.postService.getUserPost(Number(id));
+    }
+    
+    
+
 
 }

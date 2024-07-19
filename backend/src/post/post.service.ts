@@ -13,6 +13,21 @@ export class PostService {
         return post;
     }
 
+    async getUserPost(userId:number){
+        const userPost = await this.prismaService.post.findMany({
+            where:{userId: userId},
+            select:{
+                id: true,
+                content: true,
+                createdAt: true,
+                updatedAt: true,
+                userId: true,
+            },
+        })
+        return userPost;
+    }
+
+
     async createPost(reatePostDTO:createPostDTO){
         const newPost = await this.prismaService.post.create({
             data:{
@@ -23,5 +38,12 @@ export class PostService {
         return newPost;
     }
 
+    async deletePost(postId:number){
+        const deleteUserId = await this.prismaService.post.delete({
+            where:{id: postId},
+            //select:{userId:true},
+        })
+        return deleteUserId;
+        }
 
 }
