@@ -1,3 +1,4 @@
+// データを取ってくる関数
 export async function getFetchJson<T>(url:string): Promise<T> {
     const res = await fetch(url, {
         method:"GET",
@@ -8,6 +9,7 @@ export async function getFetchJson<T>(url:string): Promise<T> {
     return await res.json();
 }
 
+// データをポストして、レスポンスを返す関数
 export async function postFetchJson<T>(url:string, data:object): Promise<T> {
     const res = await fetch(url, {
         method:"POST",
@@ -20,6 +22,7 @@ export async function postFetchJson<T>(url:string, data:object): Promise<T> {
     return await res.json();
 }
 
+//ハッシュ関数
 export async function hashTextSHA256(text:string) {
     const encoder = new TextEncoder();
     const buffer = encoder.encode(text);

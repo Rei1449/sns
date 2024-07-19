@@ -1,28 +1,30 @@
-import { useEffect, useState } from "react";
 import Post, { postData } from "./Post";
-import { testPosts } from "@/utils/testData";
+import { getFetchJson } from "@/utils/utils";
+import AwaitPromise, { asyncData } from "@/utils/AwaitPromise";
 
 export default function ViewPosts() {
-    const [posts, setPosts] = useState<postData[]>([]);
+    //const [prePosts, setPrePosts] = useState([]);
     //const [postsSize, setPostsSize] = useState<number>(0);
-
-    useEffect(() => {
-        //ポストデータを取得する
-        setPosts(testPosts);
-    }, []);
 
     return (
         <div className="divide-y">
             <div className="text-center"> タイムラインコンポーネント </div>
-            { posts.map( (postData) => <Post data={postData}/> ) }
+            <AwaitPromise<postData[]>
+                promise={ getFetchJson<postData[]>('http://localhost:3001/posts/allpost') }
+                loading={ <p>ロード中</p> }
+                renderItem={ ( res: asyncData<postData[]> ) =>
+                    <MapPost asyncPostsData={res}/>
+            }/>
         </div>
     )
+}
 
-    // ポストを取得しpostsに追加する
-    /*const getPosts = async(url:string) => {
-        const newPosts: postData[] = await getFetchJson<postData[]>(url);
-        //const testData :postData = { content: 'テスト' };
-        setPosts( (prePosts) => ([...prePosts, ...newPosts]) );
-        setPostsSize( (s) => s++ );
-    }*/
+function MapPost({ asyncPostsData }: {asyncPostsData:asyncData<postData[]>}) {
+    const postsData = asyncPostsData.read();
+
+    return (
+        <>
+            { postsData.map( (postData: postData, idx: number) => <Post data={postData} key={idx}/> ) }
+        </>
+    );
 }
