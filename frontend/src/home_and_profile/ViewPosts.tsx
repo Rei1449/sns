@@ -2,7 +2,7 @@ import Post, { postData } from "./Post";
 import { getFetchJson } from "@/utils/utils";
 import ResolvePromise, { asyncData } from "@/utils/ResolvePromise";
 
-export default function ViewPosts() {
+export default function ViewPosts({postsURL}: {postsURL:string}) {
     //const [prePosts, setPrePosts] = useState([]);
     //const [postsSize, setPostsSize] = useState<number>(0);
 
@@ -10,7 +10,7 @@ export default function ViewPosts() {
         <div className="divide-y">
             <div className="text-center"> タイムラインコンポーネント </div>
             <ResolvePromise<postData[]>
-                promise={ getFetchJson<postData[]>('http://localhost:3001/posts/all') }
+                promise={ getFetchJson<postData[]>( postsURL ) }
                 loading={ <p>ロード中</p> }
                 renderItem={ ( res: asyncData<postData[]> ) =>
                     <BatchPost asyncPostsData={res}/>
