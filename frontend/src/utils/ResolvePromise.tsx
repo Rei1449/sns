@@ -43,7 +43,7 @@ Suspenseで非同期処理を行うためのラップコンポーネント
     loading:プロミスの処理中に表示するJSX
     renderItem: ( read()でプロミスの返り値を返す関数 ) => 解決後に表示するJSX
 */
-export default function AwaitPromise<T>({ promise, loading, renderItem }: props<T> ) {
+export default function ResolvePromise<T>({ promise, loading, renderItem }: props<T> ) {
     const [response] = useState( wrapPromise<T>( promise ) );
 
     return (

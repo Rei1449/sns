@@ -1,6 +1,6 @@
 import Post, { postData } from "./Post";
 import { getFetchJson } from "@/utils/utils";
-import AwaitPromise, { asyncData } from "@/utils/AwaitPromise";
+import ResolvePromise, { asyncData } from "@/utils/ResolvePromise";
 
 export default function ViewPosts() {
     //const [prePosts, setPrePosts] = useState([]);
@@ -9,17 +9,17 @@ export default function ViewPosts() {
     return (
         <div className="divide-y">
             <div className="text-center"> タイムラインコンポーネント </div>
-            <AwaitPromise<postData[]>
-                promise={ getFetchJson<postData[]>('http://localhost:3001/posts/allpost') }
+            <ResolvePromise<postData[]>
+                promise={ getFetchJson<postData[]>('http://localhost:3001/posts/all') }
                 loading={ <p>ロード中</p> }
                 renderItem={ ( res: asyncData<postData[]> ) =>
-                    <MapPost asyncPostsData={res}/>
+                    <BatchPost asyncPostsData={res}/>
             }/>
         </div>
     )
 }
 
-function MapPost({ asyncPostsData }: {asyncPostsData:asyncData<postData[]>}) {
+function BatchPost({ asyncPostsData }: {asyncPostsData:asyncData<postData[]>}) {
     const postsData = asyncPostsData.read();
 
     return (
