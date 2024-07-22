@@ -19,10 +19,16 @@ export class PostController {
         return this.postService.deletePost(Number(id));
     }
 
-    //今は全件取得だが、今後は最新３０件とか、ランダム３０件とかになるらしい
+    //今は全件取得だが、今後は最新３０件ずつとか、ランダム３０件ずつとかになるらしい
     @Get('/all')
     getAllPost(){
       return this.postService.getAllPost();
+    }
+
+    //最新３０件ー＞次の３０件となるようにしたい。
+    @Get('/new30')
+    getNew30Post(){
+      return this.postService.getNew30Post();
     }
 
     //idがstring型注意,指定の仕方例：user/?id=1
