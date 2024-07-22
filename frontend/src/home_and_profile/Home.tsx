@@ -14,7 +14,7 @@ export default function Home() {
             
             <div className='flex-initial basis-2/3 m-5'>
                 <CreatePost createrId = { cookies.myToken } />
-                <ViewPosts />
+                <ViewPosts postsURL='http://localhost:3001/posts/all' />
             </div>
         </div>
     )
