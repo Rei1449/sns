@@ -13,6 +13,11 @@ export class PostService {
         return post;
     }
 
+    async getNew30Post(){
+        const post = await this.prismaService.post.findMany({take:30})
+        return post;
+    }
+
     async getUserPost(userId:number){
         const userPost = await this.prismaService.post.findMany({
             where:{userId: userId},
