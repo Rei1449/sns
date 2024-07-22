@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ViewPosts from "./ViewPosts";
 import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
@@ -24,15 +23,12 @@ export default function Profile() {
             
             <div className='flex-initial basis-2/3 m-5'>
                 <h1>プロフ画面 userId={userId}</h1>
-                <div>
-                    <p>ここにユーザープロフィールが表示される</p>
-                    {/*<ResolvePromise<profileData>
-                        promise={ getFetchJson<profileData>( "/users/profile?id=2" ) }
-                        loading={ <div>Loading...</div> }
-                        renderItem={ (data: asyncData<profileData>) =>
-                            <ProfileHeader data={data} />
-                    }/>*/}
-                </div>
+                <ResolvePromise<profileData>
+                    promise={ getFetchJson<profileData>( `http://localhost:3001/users/profile/?id=${userId}` ) }
+                    loading={ <div>Loading...</div> }
+                    renderItem={ (data: asyncData<profileData>) =>
+                        <ProfileHeader data={data} />
+                }/>
                 <ViewPosts postsURL={`http://localhost:3001/posts/user?id=${userId}`} />
             </div>
         </div>
@@ -42,7 +38,7 @@ export default function Profile() {
 
 
 // プロフィールを表示するコンポーネント
-/*function ProfileHeader({data}: {data: asyncData<profileData>}) {
+function ProfileHeader({data}: {data: asyncData<profileData>}) {
     const profileData = data.read();
 
     return (
@@ -52,4 +48,4 @@ export default function Profile() {
             <div>idは{ profileData.id }</div>
         </div>
     )
-}*/
+}
