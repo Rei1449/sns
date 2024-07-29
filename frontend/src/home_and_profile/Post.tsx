@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 // ポストのデータ型
 export type postData = {
     id:number;
@@ -10,7 +12,8 @@ export type postData = {
 export default function Post({ data }: { data:postData }) {
     return (
         <div className="p-3" key={data.id}>
-            <div>userIDは{data.userId}、postIDは{data.id}、{ data.createdAt.toString() }</div>
+            <NavLink to={`/profile/${data.userId}`}> userIDは{data.userId} </NavLink>
+            <div>postIDは{data.id}、投稿日時{ data.createdAt.toString() }</div>
             <div className="rounded-md m-2 p-2 shadow-md">
                 {data.content}
             </div>
