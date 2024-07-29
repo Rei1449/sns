@@ -33,23 +33,23 @@ export default function Login() {
     }
 
     return (
-        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl px-10 py-4">
+        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl py-4">
             <div className="mb-4 text-center text-lg font-semibold"> ログイン </div>
 
             <Form {...formHook}>
                 <form onSubmit={formHook.handleSubmit(onSubmitForm)}>
 
                     {/* 入力フォーム */}
-                    <div className="my-2">
+                    <div className="mx-10 my-2">
                         <EmailFormField form={formHook}/>
                     </div>
                     
-                    <div className="my-2">
+                    <div className="mx-10 my-2">
                         <PWFormField form={formHook}/>
                     </div>
 
                     {/* ログインボタン */}
-                    <div className="my-5 flex flex-row-reverse justify-between">
+                    <div className="mx-10 my-5 flex flex-row-reverse justify-between">
                         <Button
                             variant="default"
                             type="submit"> ログイン </Button>

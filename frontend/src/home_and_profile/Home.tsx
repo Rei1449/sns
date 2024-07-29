@@ -8,8 +8,10 @@ export default function Home() {
 
     return (
         <div className='flex justify-center'>
-            <div className='basis-32 outline'>
-                <SideBar />
+            <div className='flex flex-col items-end w-72'>
+                <div className='fixed outline'>
+                    <SideBar />
+                </div>
             </div>
             
             <div className='flex-initial basis-2/3 m-5'>
