@@ -27,6 +27,7 @@ export default function Register() {
             try {
                 const token: string = await postFetchJson<string>('http://localhost:3001/users/create', data);
                 setCookie('myToken', token, { maxAge : 3600 });
+                nav('/');
             } catch(e) {
                 /*認証されない場合どうやって画面に表示する？*/
                 alert(e);
@@ -35,17 +36,25 @@ export default function Register() {
     }
 
     return (
-        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl p-10">
-            <h1>新規登録</h1>
-            <br/>
+        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl px-10 py-4">
+            <div className="mb-4 text-center text-lg font-semibold"> 新規登録 </div>
+
             <Form {...formHook}>
                 <form onSubmit={formHook.handleSubmit(onSubmitForm)}>
 
-                    <NameFormField form={formHook} />
-                    <EmailFormField form={formHook} />
-                    <PWFormField form={formHook} />
+                    {/* 入力フォーム */}
+                    <div className="my-2">
+                        <NameFormField form={formHook} />
+                    </div>
+                    <div className="my-2">
+                        <EmailFormField form={formHook} />
+                    </div>
+                    <div className="my-2">
+                        <PWFormField form={formHook} />
+                    </div>
 
-                    <div className="flex flex-row-reverse justify-between">
+                    {/* 登録ボタン */}
+                    <div className="my-5 flex flex-row-reverse justify-between">
                         <Button
                             variant="default"
                             type="submit"> 登録 </Button>
