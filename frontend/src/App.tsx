@@ -8,17 +8,15 @@ import { CookiesProvider } from 'react-cookie'
 
 function App() {
   return (
-    <div>
-      <CookiesProvider>
-        <Routes>
-          <Route path="/" element={ <Home /> } />
-          <Route path="/login" element={ <Login /> } />
-          <Route path="/register" element={ <Register /> } />
-          <Route path="/profile/:userId" element={ <Profile /> } />
-          <Route path="/*" element={ <Notfound /> } />
-        </Routes>
-      </CookiesProvider>
-    </div>
+    <CookiesProvider>
+      <Routes>
+        <Route path="/" element={ <Home /> } />
+        <Route path="/login" element={ <Login /> } />
+        <Route path="/register" element={ <Register /> } />
+        <Route path="/profile/:userId" element={ <Profile /> } />
+        <Route path="/*" element={ <Notfound /> } />
+      </Routes>
+    </CookiesProvider>
   )
 }
 
