@@ -3,7 +3,6 @@ export async function getFetchJson<T>(url:string): Promise<T> {
     const res = await fetch(url,
     {
         method:"GET",
-        mode:'cors',
         headers: {
             'Content-Type': 'application/json',
         }
