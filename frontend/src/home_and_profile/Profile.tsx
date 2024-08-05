@@ -28,6 +28,7 @@ export default function Profile() {
                 <ResolvePromise<profileData>
                     promise={ getFetchJson<profileData>( `http://localhost:3001/users/profile/?id=${userId}` ) }
                     loading={ <div>Loading...</div> }
+                    error={ <div>エラーが発生しました</div> }
                     renderItem={ (data: asyncData<profileData>) =>
                         <ProfileHeader data={data} />
                 }/>
