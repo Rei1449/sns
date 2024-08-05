@@ -6,7 +6,6 @@ export default function SideBar() {
 
     return (
         <div className="flex flex-col gap-2 min-w-32">
-            <div className="text-center"> サイドバー </div><br/>
             <Button
                 variant='ghost'
                 onClick={ () => nav("/") }>

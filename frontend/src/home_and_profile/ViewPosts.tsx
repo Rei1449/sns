@@ -7,8 +7,7 @@ export default function ViewPosts({postsURL}: {postsURL:string}) {
     //const [postsSize, setPostsSize] = useState<number>(0);
 
     return (
-        <div className="divide-y">
-            <div className="text-center"> タイムラインコンポーネント </div>
+        <div className="border divide-y">
             <ResolvePromise<postData[]>
                 promise={ getFetchJson<postData[]>( postsURL ) }
                 loading={ <p>ロード中</p> }

@@ -16,12 +16,14 @@ export default function Profile() {
     const { userId } = useParams<{ userId:string }>();
 
     return (
-        <div className='flex justify-center'>
-            <div className='basis-32 outline'>
-                <SideBar />
+        <div className='flex place-content-center'>
+            <div className='flex flex-col items-end w-48'>
+                <div className='fixed outline'>
+                    <SideBar />
+                </div>
             </div>
             
-            <div className='flex-initial basis-2/3 m-5'>
+            <div className='basis-2/3 m-5'>
                 <h1>プロフ画面 userId={userId}</h1>
                 <ResolvePromise<profileData>
                     promise={ getFetchJson<profileData>( `http://localhost:3001/users/profile/?id=${userId}` ) }
@@ -29,7 +31,7 @@ export default function Profile() {
                     renderItem={ (data: asyncData<profileData>) =>
                         <ProfileHeader data={data} />
                 }/>
-                <ViewPosts postsURL={`http://localhost:3001/posts/user?id=${userId}`} />
+                <ViewPosts postsURL='http://localhost:3001/posts/all' />
             </div>
         </div>
     )
