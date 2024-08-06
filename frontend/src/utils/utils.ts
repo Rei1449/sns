@@ -1,7 +1,11 @@
 // データを取ってくる関数
 export async function getFetchJson<T>(url:string): Promise<T> {
-    const res = await fetch(url, {
+    const res = await fetch(url,
+    {
         method:"GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
     });
     if (!res.ok) {
         throw new Error(res.statusText);
@@ -13,7 +17,9 @@ export async function getFetchJson<T>(url:string): Promise<T> {
 export async function postFetchJson<T>(url:string, data:object): Promise<T> {
     const res = await fetch(url, {
         method:"POST",
-        headers: {"Content-Type": "application/json",},
+        headers: {
+            "Content-Type": "application/json",
+        },
         body:JSON.stringify(data),
     });
     if (!res.ok) {
