@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form";
 import { Textarea } from "@/components/ui/Textarea";
 import { postFetchJson } from "@/utils/utils";
+import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
 
 export default function CreatePost({ createrId } : { createrId:number }) {
@@ -11,16 +12,26 @@ export default function CreatePost({ createrId } : { createrId:number }) {
     }
 
     const formHook = useForm<sendData>({defaultValues:{userId:createrId, content:''}} );
+    const [cookies] = useCookies();
 
     return (
         <div className="">
             
             <Form {...formHook}>
-            <form onSubmit={formHook.handleSubmit((data: sendData) => {
+            <form onSubmit={formHook.handleSubmit(async(data: sendData) => {
                 // 提出時の動作を書く
-                //data.userId = createrId;
                 console.log(data);
-                postFetchJson('http://localhost:3001/posts', data);
+                const res = await fetch('http://localhost:3001/posts', {
+                    method:"POST",
+                    headers: {
+                        'Authorization': 'Bearer '+cookies.myToken,
+                        "Content-Type": "application/json",
+                    },
+                    body:JSON.stringify(data),
+                });
+                if (!res.ok) {
+                    console.log(res.statusText);
+                }
             })}>
 
                 <FormField
