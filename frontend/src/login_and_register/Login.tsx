@@ -25,6 +25,7 @@ export default function Login() {
             try {
                 const token: string = await postFetchJson<string>('http://localhost:3001/auth/login', data);
                 setCookie('myToken', token, { maxAge : 3600 });
+                nav('/');
             } catch(e) {
                 alert(e);
             }
@@ -32,18 +33,23 @@ export default function Login() {
     }
 
     return (
-        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl p-10">
-            <h1>ログイン</h1>
-            <h2>Todo:ハッシュ化</h2>
-            <br/>
+        <div className="m-auto mt-20 w-96 h-auto outline rounded-3xl py-4">
+            <div className="mb-4 text-center text-lg font-semibold"> ログイン </div>
 
             <Form {...formHook}>
                 <form onSubmit={formHook.handleSubmit(onSubmitForm)}>
 
-                    <EmailFormField form={formHook}/>
-                    <PWFormField form={formHook}/>
+                    {/* 入力フォーム */}
+                    <div className="mx-10 my-2">
+                        <EmailFormField form={formHook}/>
+                    </div>
+                    
+                    <div className="mx-10 my-2">
+                        <PWFormField form={formHook}/>
+                    </div>
 
-                    <div className="flex flex-row-reverse justify-between">
+                    {/* ログインボタン */}
+                    <div className="mx-10 my-5 flex flex-row-reverse justify-between">
                         <Button
                             variant="default"
                             type="submit"> ログイン </Button>
@@ -54,6 +60,7 @@ export default function Login() {
 
                 </form>
             </Form>
+
         </div>
     )
 }

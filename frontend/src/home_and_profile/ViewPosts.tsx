@@ -3,15 +3,14 @@ import { getFetchJson } from "@/utils/utils";
 import ResolvePromise, { asyncData } from "@/utils/ResolvePromise";
 
 export default function ViewPosts({postsURL}: {postsURL:string}) {
-    //const [prePosts, setPrePosts] = useState([]);
-    //const [postsSize, setPostsSize] = useState<number>(0);
+    // Todo:バッチポストをさらにmapで回して表示する
 
     return (
-        <div className="divide-y">
-            <div className="text-center"> タイムラインコンポーネント </div>
+        <div className="border divide-y">
             <ResolvePromise<postData[]>
                 promise={ getFetchJson<postData[]>( postsURL ) }
                 loading={ <p>ロード中</p> }
+                error={ <div>エラーが発生しました</div> }
                 renderItem={ ( res: asyncData<postData[]> ) =>
                     <BatchPost asyncPostsData={res}/>
             }/>
