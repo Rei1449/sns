@@ -4,7 +4,11 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescripti
 import { Input } from "@/components/ui/Input";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { hashTextSHA256, postFetchJson } from "@/utils/utils";
+import { hashTextSHA256 } from "@/utils/utils";
+
+export type accountData = {
+    access_token: string;
+};
 
 // ログイン画面のコンポーネント
 export default function Login() {
@@ -18,18 +22,27 @@ export default function Login() {
         typeof arg.email === "string" &&
         typeof arg.password === "string";
 
+    // 提出時の動作を書く
     const onSubmitForm = async(data: any) => {
-        // 提出時の動作を書く
         if ( isLoginData(data) ) {
             data.password = await hashTextSHA256(data.password);
-            try {
-                const token: string = await postFetchJson<string>('http://localhost:3001/auth/login', data);
-                setCookie('myToken', token, { maxAge : 3600 });
-                nav('/');
-            } catch(e) {
-                alert(e);
+
+            const res = await fetch('http://localhost:3001/auth/login', {
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body:JSON.stringify(data),
+                });
+            if (!res.ok) {
+                console.log(res.statusText);
             }
-        } else { alert('登録データの型が間違っています') }
+            const accountData: accountData = await res.json();
+            
+            setCookie('access_token', accountData.access_token, { maxAge : 3600 });
+            nav('/');
+
+        } else { console.log('登録データの型が間違っています') }
     }
 
     return (
@@ -37,7 +50,7 @@ export default function Login() {
             <div className="mb-4 text-center text-lg font-semibold"> ログイン </div>
 
             <Form {...formHook}>
-                <form onSubmit={formHook.handleSubmit(onSubmitForm)}>
+                <form onSubmit={formHook.handleSubmit( onSubmitForm )}>
 
                     {/* 入力フォーム */}
                     <div className="mx-10 my-2">
