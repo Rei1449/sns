@@ -1,38 +1,46 @@
 import { Button } from "@/components/ui/Button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form";
 import { Textarea } from "@/components/ui/Textarea";
-import { postFetchJson } from "@/utils/utils";
 import { useCookies } from "react-cookie";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-export default function CreatePost({ createrId } : { createrId:number }) {
-    type sendData = {
-        userId: number;
-        content: string;
-    }
+type sendData = {
+    userId: number;
+    content: string;
+}
 
-    const formHook = useForm<sendData>({defaultValues:{userId:createrId, content:''}} );
+export default function CreatePost() {
+    const nav = useNavigate();
     const [cookies] = useCookies();
+    const formHook = useForm<sendData>({defaultValues:{userId:2241, content:''}} );//本当はクッキーにuserIDが入る
+
+    // 投稿時の動作
+    const onSubmitForm = async(data: sendData) => {
+        // 非ログイン時、ログイン画面に遷移
+        if(typeof cookies.access_token !== 'string') {
+            nav("/login");
+        }
+
+        console.log(data);
+        const res = await fetch('http://localhost:3001/posts', {
+                method:"POST",
+                headers: {
+                    'Authorization': 'Bearer ' + cookies.access_token,
+                    "Content-Type": "application/json",
+                },
+                body:JSON.stringify(data),
+            });
+        if (!res.ok) {
+            console.log(res.statusText);
+        }
+    }
 
     return (
         <div className="">
             
             <Form {...formHook}>
-            <form onSubmit={formHook.handleSubmit(async(data: sendData) => {
-                // 提出時の動作を書く
-                console.log(data);
-                const res = await fetch('http://localhost:3001/posts', {
-                    method:"POST",
-                    headers: {
-                        'Authorization': 'Bearer '+cookies.myToken,
-                        "Content-Type": "application/json",
-                    },
-                    body:JSON.stringify(data),
-                });
-                if (!res.ok) {
-                    console.log(res.statusText);
-                }
-            })}>
+            <form onSubmit={formHook.handleSubmit( onSubmitForm )}>
 
                 <FormField
                 control={formHook.control}

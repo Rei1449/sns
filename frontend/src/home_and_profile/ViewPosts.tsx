@@ -8,7 +8,7 @@ export default function ViewPosts({postsURL}: {postsURL:string}) {
     return (
         <div className="border divide-y">
             <ResolvePromise<postData[]>
-                promise={ getFetchJson<postData[]>( postsURL ) }
+                promise={ getPostsJson( postsURL ) }
                 loading={ <p>ロード中</p> }
                 error={ <div>エラーが発生しました</div> }
                 renderItem={ ( res: asyncData<postData[]> ) =>
@@ -16,6 +16,19 @@ export default function ViewPosts({postsURL}: {postsURL:string}) {
             }/>
         </div>
     )
+}
+
+async function getPostsJson( postsURL:string ): Promise<postData[]> {
+    const res = await fetch(postsURL, {
+            method:"GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+    return await res.json();
 }
 
 function BatchPost({ asyncPostsData }: {asyncPostsData:asyncData<postData[]>}) {

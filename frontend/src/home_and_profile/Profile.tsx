@@ -2,7 +2,6 @@ import ViewPosts from "./ViewPosts";
 import { useParams } from "react-router-dom";
 import SideBar from "./SideBar";
 import ResolvePromise, { asyncData } from "@/utils/ResolvePromise";
-import { getFetchJson } from "@/utils/utils";
 
 type profileData = {
     id: number;
@@ -26,7 +25,7 @@ export default function Profile() {
             <div className='basis-2/3 m-5'>
                 <h1>プロフ画面 userId={userId}</h1>
                 <ResolvePromise<profileData>
-                    promise={ getFetchJson<profileData>( `http://localhost:3001/users/profile/?id=${userId}` ) }
+                    promise={ getProfileJson() }
                     loading={ <div>Loading...</div> }
                     error={ <div>エラーが発生しました</div> }
                     renderItem={ (data: asyncData<profileData>) =>
@@ -38,7 +37,20 @@ export default function Profile() {
     )
 }
 
+async function getProfileJson(): Promise<profileData> {
+    const { userId } = useParams<{ userId:string }>();
 
+    const res = await fetch(`http://localhost:3001/users/profile/?id=${userId}`, {
+            method:"GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+    return await res.json();
+}
 
 // プロフィールを表示するコンポーネント
 function ProfileHeader({data}: {data: asyncData<profileData>}) {
