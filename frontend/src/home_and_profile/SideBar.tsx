@@ -13,7 +13,7 @@ export default function SideBar() {
             </Button>
             <Button
                 variant='ghost'
-                onClick={ () => nav(`/profile/${1}`) }>
+                onClick={ () => nav(`/profile/${1}`) }> {/*クッキーのuserIDを使う*/}
                     マイプロフィール
             </Button>
             <Button
