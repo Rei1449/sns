@@ -27,6 +27,7 @@ export class UsersService {
             const payload = { id: result.id, email: result.email };
             return {
                 access_token: await this.jwtService.signAsync(payload),
+                user_id: result.id,
             };
         // } else {
         //     throw Error("既に存在するアドレスで登録しようとしています。");
