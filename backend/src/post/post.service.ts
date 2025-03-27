@@ -34,6 +34,7 @@ export class PostService {
 
 
     async createPost(reatePostDTO:createPostDTO){
+        
         const newPost = await this.prismaService.post.create({
             data:{
                 content: reatePostDTO.content,
