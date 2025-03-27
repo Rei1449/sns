@@ -1,6 +1,7 @@
-import { Controller, Query, Get, Post, Body, HttpCode, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Query, Get, Post, Body, HttpCode, HttpStatus, Delete, UseGuards, Request } from '@nestjs/common';
 import { PostService } from './post.service';
 import { createPostDTO } from 'src/dto/post.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('posts')
 export class PostController {
@@ -8,7 +9,11 @@ export class PostController {
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async createPost(@Body() createPostDTO: createPostDTO){
+    @UseGuards(AuthGuard) // 認証チェック
+    async createPost(@Body() createPostDTO: createPostDTO, @Request() req: any){
+      const user = req.user; // トークンから取得したユーザー情報
+      console.log("test post",user);
+      // print("test post")
       const newPost = await this.postService.createPost(createPostDTO);
       return newPost;
     }
