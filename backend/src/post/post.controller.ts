@@ -2,6 +2,7 @@ import { Controller, Query, Get, Post, Body, HttpCode, HttpStatus, Delete, UseGu
 import { PostService } from './post.service';
 import { createPostDTO } from 'src/dto/post.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { JwtPayload } from 'src/types/user';
 
 @Controller('posts')
 export class PostController {
@@ -10,11 +11,12 @@ export class PostController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UseGuards(AuthGuard) // 認証チェック
-    async createPost(@Body() createPostDTO: createPostDTO, @Request() req: any){
+    async createPost(@Body() createPostDTO: createPostDTO, @Request() req: JwtPayload){
       const user = req.user; // トークンから取得したユーザー情報
+      console.log("check req", req)
       console.log("test post",user);
       // print("test post")
-      const newPost = await this.postService.createPost(createPostDTO);
+      const newPost = await this.postService.createPost(createPostDTO, user);
       return newPost;
     }
 
