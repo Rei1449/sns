@@ -31,7 +31,7 @@ services:
       - .:/app
     depends_on:
       - db
-    command: yarn start
+    command: yarn start:dev
 
   db:
     image: postgres:15
