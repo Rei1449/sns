@@ -22,11 +22,13 @@ export class PostController {
 
     //idがstring型注意,指定の仕方例：/?id=1
     @Delete()
-    deletePost(@Query('id') id:string){
-        return this.postService.deletePost(Number(id));
+    // @UseGuards(AuthGuard) // 認証チェック
+    deletePost(@Query('id') id:string, @Request() req: JwtPayload){
+      console.log(req);
+      return this.postService.deletePost(Number(id), req.user.id);
     }
 
-    //今は全件取得だが、今後は最新３０件ずつとか、ランダム３０件ずつとかになるらしい
+    //今は全件取得だが、今後は最新３０件ずつとか、ランダム３０件ずつとかにしたい
     @Get('/all')
     getAllPost(){
       return this.postService.getAllPost();
