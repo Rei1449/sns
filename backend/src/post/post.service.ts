@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { createPostDTO } from 'src/dto/post.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ReqUserInfo } from 'src/types/user';
 
 @Injectable()
 export class PostService {
@@ -33,17 +34,29 @@ export class PostService {
     }
 
 
-    async createPost(reatePostDTO:createPostDTO){
+    async createPost(reatePostDTO:createPostDTO, userData: ReqUserInfo){
+        
         const newPost = await this.prismaService.post.create({
             data:{
                 content: reatePostDTO.content,
-                userId: reatePostDTO.userId,
+                userId: userData.id,
             },
         });
         return newPost;
     }
 
-    async deletePost(postId:number){
+    async deletePost(postId:number, userId:number){
+        // データがあるかチェック
+        const post = await this.prismaService.post.findFirst({
+            where: {id: postId}
+        })
+        if (!post) {
+            throw new NotFoundException("カスタムエラー:投稿がありません");
+        }
+        if (post.userId != userId) {
+            throw new ForbiddenException("カスタムエラー:userが一致しません");
+        }
+
         const deleteUserId = await this.prismaService.post.delete({
             where:{id: postId},
             //select:{userId:true},
