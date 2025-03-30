@@ -8,6 +8,15 @@ import { JwtPayload } from 'src/types/user';
 export class PostController {
     constructor(private readonly postService: PostService) {}
 
+    @Get()
+    async getPosts(
+      @Query('beforeId') beforeId?: string,
+      @Query('beforeDate') beforeDate?: string,
+      @Query('userId') userId?: string
+    ) {
+      return this.postService.getPosts(beforeId, beforeDate, userId);
+    }
+
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UseGuards(AuthGuard) // 認証チェック
