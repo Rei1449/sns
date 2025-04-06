@@ -9,6 +9,41 @@ export class PostService {
         private prismaService: PrismaService,
     ) {}
 
+    async getPosts(beforeId?: string, beforeDate?: string, userId?: string) {
+        const whereClause: any = {};
+        if (beforeId) {
+            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
+        }
+        if (beforeDate) {
+            const parsed = new Date(beforeDate);
+            if (!isNaN(parsed.getTime())) {
+                whereClause.createdAt = {
+                    ...(whereClause.createdAt || {}),
+                    lt: parsed, //  「その日時以前」ならlte
+                };
+            }
+        }
+        if (userId) {
+            whereClause.userId = Number(userId);
+        }
+
+        const posts = await this.prismaService.post.findMany({
+            where: whereClause,
+            orderBy: {updatedAt: 'desc'},
+            take: 5,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        // email: true,
+                    },
+                },
+            }
+        })
+        return posts;
+    }
+
     async getAllPost(){
         const post = await this.prismaService.post.findMany({})
         return post;
@@ -57,11 +92,11 @@ export class PostService {
             throw new ForbiddenException("カスタムエラー:userが一致しません");
         }
 
-        const deleteUserId = await this.prismaService.post.delete({
+        const deletePost = await this.prismaService.post.delete({
             where:{id: postId},
             //select:{userId:true},
         })
-        return deleteUserId;
+        return deletePost;
         }
 
 }

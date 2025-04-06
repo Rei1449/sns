@@ -8,23 +8,28 @@ import { JwtPayload } from 'src/types/user';
 export class PostController {
     constructor(private readonly postService: PostService) {}
 
+    @Get()
+    async getPosts(
+      @Query('beforeId') beforeId?: string,
+      @Query('beforeDate') beforeDate?: string,
+      @Query('userId') userId?: string
+    ) {
+      return this.postService.getPosts(beforeId, beforeDate, userId);
+    }
+
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UseGuards(AuthGuard) // 認証チェック
     async createPost(@Body() createPostDTO: createPostDTO, @Request() req: JwtPayload){
       const user = req.user; // トークンから取得したユーザー情報
-      console.log("check req", req)
-      console.log("test post",user);
-      // print("test post")
       const newPost = await this.postService.createPost(createPostDTO, user);
       return newPost;
     }
 
     //idがstring型注意,指定の仕方例：/?id=1
     @Delete()
-    // @UseGuards(AuthGuard) // 認証チェック
+    @UseGuards(AuthGuard) // 認証チェック
     deletePost(@Query('id') id:string, @Request() req: JwtPayload){
-      console.log(req);
       return this.postService.deletePost(Number(id), req.user.id);
     }
 
