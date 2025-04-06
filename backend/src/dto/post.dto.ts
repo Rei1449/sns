@@ -3,5 +3,5 @@ export class createPostDTO {
     content: string;
     //createdAt: Date;
     //updatedAt: Date;
-    userId: number;
+    // userId: number;
 }

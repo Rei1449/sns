@@ -92,11 +92,11 @@ export class PostService {
             throw new ForbiddenException("カスタムエラー:userが一致しません");
         }
 
-        const deleteUserId = await this.prismaService.post.delete({
+        const deletePost = await this.prismaService.post.delete({
             where:{id: postId},
             //select:{userId:true},
         })
-        return deleteUserId;
+        return deletePost;
         }
 
 }
