@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import {createHash} from 'crypto'
+import 'dotenv/config'
 
 const encryptSha256 = (str:string) => {
     const hash = createHash('sha256');
