@@ -39,7 +39,12 @@ export default function Register() {
             }
             const accountData: accountData = await res.json();
 
-            setCookie('access_token', accountData.access_token, { maxAge : 3600 });
+            const dataAge = 3600;   // データがクッキーに保存される時間＝1時間
+            setCookie('user_id', accountData.user_id, { maxAge : dataAge });
+            setCookie('name', accountData.name, { maxAge : dataAge });
+            setCookie('createdAt', accountData.createdAt, { maxAge : dataAge });
+            setCookie('updatedAt', accountData.updatedAt, { maxAge : dataAge });
+            setCookie('access_token', accountData.access_token, { maxAge : dataAge });
             nav('/');
         } else { console.log('登録データの型が間違っています') }
     }

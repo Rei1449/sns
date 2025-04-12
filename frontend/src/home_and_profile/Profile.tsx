@@ -41,11 +41,11 @@ async function getProfileJson(): Promise<profileData> {
     const { userId } = useParams<{ userId:string }>();
 
     const res = await fetch(`http://localhost:3001/users/profile/?id=${userId}`, {
-            method:"GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
+                    method:"GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
     if (!res.ok) {
         throw new Error(res.statusText);
     }

@@ -7,7 +7,11 @@ import { useCookies } from "react-cookie";
 import { hashTextSHA256 } from "@/utils/utils";
 
 export type accountData = {
-    access_token: string;
+    user_id: number 
+    name: string,
+    createdAt: Date,
+    updatedAt: Date,
+    access_token: string
 };
 
 // ログイン画面のコンポーネント
@@ -39,7 +43,12 @@ export default function Login() {
             }
             const accountData: accountData = await res.json();
             
-            setCookie('access_token', accountData.access_token, { maxAge : 3600 });
+            const dataAge = 3600;   // データがクッキーに保存される時間＝1時間
+            setCookie('user_id', accountData.user_id, { maxAge : dataAge });
+            setCookie('name', accountData.name, { maxAge : dataAge });
+            setCookie('createdAt', accountData.createdAt, { maxAge : dataAge });
+            setCookie('updatedAt', accountData.updatedAt, { maxAge : dataAge });
+            setCookie('access_token', accountData.access_token, { maxAge : dataAge });
             nav('/');
 
         } else { console.log('登録データの型が間違っています') }
@@ -108,11 +117,11 @@ export function PWFormField({ form }: {form: UseFormReturn}) {
         control={form.control}
         name="password"
         defaultValue=""
-        rules={{ required:'パスワードを入力してください。',
-                 minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
-                 maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
-                 pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
-                 }}
+        rules={{required:'パスワードを入力してください。',
+                minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
+                maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
+                pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
+                }}
         render={({ field }) => (
             <FormItem>
                 <FormLabel> Password </FormLabel>
