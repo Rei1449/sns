@@ -1,25 +1,39 @@
-import { Controller, Query, Get, Post, Body, HttpCode, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Query, Get, Post, Body, HttpCode, HttpStatus, Delete, UseGuards, Request } from '@nestjs/common';
 import { PostService } from './post.service';
 import { createPostDTO } from 'src/dto/post.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { JwtPayload } from 'src/types/user';
 
 @Controller('posts')
 export class PostController {
     constructor(private readonly postService: PostService) {}
 
+    @Get()
+    async getPosts(
+      @Query('beforeId') beforeId?: string,
+      @Query('beforeDate') beforeDate?: string,
+      @Query('userId') userId?: string
+    ) {
+      return this.postService.getPosts(beforeId, beforeDate, userId);
+    }
+
     @Post()
     @HttpCode(HttpStatus.CREATED)
-    async createPost(@Body() createPostDTO: createPostDTO){
-      const newPost = await this.postService.createPost(createPostDTO);
+    @UseGuards(AuthGuard) // 認証チェック
+    async createPost(@Body() createPostDTO: createPostDTO, @Request() req: JwtPayload){
+      const user = req.user; // トークンから取得したユーザー情報
+      const newPost = await this.postService.createPost(createPostDTO, user);
       return newPost;
     }
 
     //idがstring型注意,指定の仕方例：/?id=1
     @Delete()
-    deletePost(@Query('id') id:string){
-        return this.postService.deletePost(Number(id));
+    @UseGuards(AuthGuard) // 認証チェック
+    deletePost(@Query('id') id:string, @Request() req: JwtPayload){
+      return this.postService.deletePost(Number(id), req.user.id);
     }
 
-    //今は全件取得だが、今後は最新３０件ずつとか、ランダム３０件ずつとかになるらしい
+    //今は全件取得だが、今後は最新３０件ずつとか、ランダム３０件ずつとかにしたい
     @Get('/all')
     getAllPost(){
       return this.postService.getAllPost();

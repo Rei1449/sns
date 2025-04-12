@@ -28,6 +28,9 @@ export class UsersService {
             return {
                 access_token: await this.jwtService.signAsync(payload),
                 user_id: result.id,
+                name: result.name,
+                createdAt: result.createdAt,
+                updatedAt: result.updatedAt
             };
         // } else {
         //     throw Error("既に存在するアドレスで登録しようとしています。");
@@ -44,6 +47,8 @@ export class UsersService {
                 email: true,
                 name: true,
                 password: true,
+                createdAt: true,
+                updatedAt: true
             },
         })
         return user;
