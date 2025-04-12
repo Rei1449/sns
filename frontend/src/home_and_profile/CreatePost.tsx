@@ -13,7 +13,7 @@ type sendData = {
 export default function CreatePost() {
     const nav = useNavigate();
     const [cookies] = useCookies();
-    const formHook = useForm<sendData>({defaultValues:{userId:1, content:''}} );    //本当はクッキーにuserIDが入る
+    const formHook = useForm<sendData>({defaultValues:{userId:cookies.user_id, content:''}} );
 
     // 投稿時の動作
     const onSubmitForm = async(data: sendData) => {
