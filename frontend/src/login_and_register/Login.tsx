@@ -5,9 +5,14 @@ import { Input } from "@/components/ui/Input";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { hashTextSHA256 } from "@/utils/utils";
+import { useState } from "react";
 
 export type accountData = {
-    access_token: string;
+    user_id: number
+    name: string,
+    createdAt: Date,
+    updatedAt: Date,
+    access_token: string
 };
 
 // ログイン画面のコンポーネント
@@ -39,7 +44,12 @@ export default function Login() {
             }
             const accountData: accountData = await res.json();
             
-            setCookie('access_token', accountData.access_token, { maxAge : 3600 });
+            const dataAge = 3600;   // データがクッキーに保存される時間＝1時間
+            setCookie('user_id', accountData.user_id, { maxAge : dataAge });
+            setCookie('name', accountData.name, { maxAge : dataAge });
+            setCookie('createdAt', accountData.createdAt, { maxAge : dataAge });
+            setCookie('updatedAt', accountData.updatedAt, { maxAge : dataAge });
+            setCookie('access_token', accountData.access_token, { maxAge : dataAge });
             nav('/');
 
         } else { console.log('登録データの型が間違っています') }
@@ -64,9 +74,10 @@ export default function Login() {
                     {/* ログインボタン */}
                     <div className="mx-10 my-5 flex flex-row-reverse justify-between">
                         <Button
-                            variant="default"
-                            type="submit"> ログイン </Button>
+                            type="submit"
+                            variant="default" > ログイン </Button>
                         <Button
+                            type="button"
                             variant="outline"
                             onClick={() => nav("/register")} > 新規登録 </Button>
                     </div>
@@ -103,29 +114,42 @@ export function EmailFormField({ form }: {form: UseFormReturn}) {
 }
 
 export function PWFormField({ form }: {form: UseFormReturn}) {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
     return (
-        <FormField
-        control={form.control}
-        name="password"
-        defaultValue=""
-        rules={{ required:'パスワードを入力してください。',
-                 minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
-                 maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
-                 pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
-                 }}
-        render={({ field }) => (
-            <FormItem>
-                <FormLabel> Password </FormLabel>
-                <FormControl>
-                    <Input
-                        type="text" 
-                        placeholder="パスワード"
-                        {...field}
-                    />
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-            </FormItem>
-        )}/>
+        <>
+            <FormField
+            control={form.control}
+            name="password"
+            defaultValue=""
+            rules={{required:'パスワードを入力してください。',
+                    minLength: {value:8, message:'パスワードは8文字以上でなければなりません。'},
+                    maxLength: {value:30, message:'パスワードは30文字以下でなければなりません。'},
+                    pattern: {value:/[a-zA-Z]+[0-9]+[^a-zA-z0-9]*/, message:'アルファベットと数字がそれぞれ1文字以上必要です。'}
+                    }}
+            render={({ field }) => (
+                <FormItem>
+                    <FormLabel> Password </FormLabel>
+                    <FormControl>
+                        <Input
+                            type = {isPasswordVisible ? "text" : "password"}
+                            placeholder = "パスワード"
+                            {...field}
+                        />
+                    </FormControl>
+                    <FormDescription />
+                    <FormMessage />
+                </FormItem>
+            )}/>
+            <Button
+                className=""
+                type="button"
+                variant="outline"
+                onMouseDown={ () => {setIsPasswordVisible(true)} }  /* ボタンを押したら表示 */
+                onMouseUp={ () => {setIsPasswordVisible(false)} }  /* ボタンを離したら非表示 */
+            >
+                {isPasswordVisible ? "非表示" : "表示"}
+            </Button>
+        </>
     )
 }

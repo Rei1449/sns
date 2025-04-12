@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/Button";
 import { useNavigate } from "react-router-dom"
+import { useCookies } from "react-cookie";
 
 export default function SideBar() {
+    const [cookies] = useCookies();
     const nav = useNavigate();
 
     return (
@@ -13,7 +15,7 @@ export default function SideBar() {
             </Button>
             <Button
                 variant='ghost'
-                onClick={ () => nav(`/profile/${1}`) }> {/*クッキーのuserIDを使う*/}
+                onClick={ () => nav(`/profile/${cookies.user_id}`) }>
                     マイプロフィール
             </Button>
             <Button

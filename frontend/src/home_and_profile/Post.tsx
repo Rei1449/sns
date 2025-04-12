@@ -6,7 +6,11 @@ export type postData = {
     content: string;
     createdAt:Date;
     updatedAt:Date;
-    userId:number;
+    userId: number;
+    user: {
+        id: number
+        name: string
+    }
 }
 
 export default function Post({ data }: { data:postData }) {
