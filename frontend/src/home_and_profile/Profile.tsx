@@ -60,7 +60,7 @@ async function getProfileJson(): Promise<profileData> {
     const { userId } = useParams<{ userId:string }>();
     const [cookies] = useCookies();
 
-    const res = await fetch(`http://localhost:3001/users/profile/?id=${userId}`, {
+    const res = await fetch(`http://localhost:3001/users/profile?id=${userId}`, {
                     method:"GET",
                     headers: {
                         'Authorization': 'Bearer ' + cookies.access_token,
