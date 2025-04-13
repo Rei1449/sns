@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import {createHash} from 'crypto'
+import 'dotenv/config'
 
 const encryptSha256 = (str:string) => {
     const hash = createHash('sha256');
@@ -23,7 +24,7 @@ async function main() {
             posts: {
                 create: [
                     {
-                        content: '今日はいい天気だった。散歩日和だ。',
+                        content: '今日はいい天気だ。散歩日和。',
                     },
                     {
                         content: '明日は雨が降るらしい。洗濯物は干せないな。',
