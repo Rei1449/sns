@@ -29,16 +29,19 @@ model User {
   updatedAt DateTime @updatedAt
   posts     Post[]
 
-  followings Follows[] @relation("Followings")
-  followers  Follows[] @relation("Followers")
+  followings Follow[] @relation("Followings")
+  followers  Follow[] @relation("Followers")
 
   // @@schema("auth") // or @@schema("public")
 }
 
-model Follows {
-  id             Int @id @default(autoincrement())
+model Follow {
+  // id             Int @id @default(autoincrement())
   followUserId   Int
   followedUserId Int
+
+  // @@unique に名前をつけておくと分かりやすい
+  @@unique([followUserId, followedUserId], name: "unique_follow_pair")
 
   followings User @relation("Followings", fields: [followUserId], references: [id], onDelete: Cascade)
   followeds  User @relation("Followers", fields: [followedUserId], references: [id], onDelete: Cascade)
@@ -56,4 +59,9 @@ model Post {
   updatedAt DateTime @default(now()) @updatedAt
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Test {
+  id   Int    @id @default(autoincrement())
+  name String
 }
