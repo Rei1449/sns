@@ -103,9 +103,22 @@ export class UsersService {
     }
 
     async unFollowUser(userData: ReqUserInfo, followUserDTO: followUserDTO){
-
-        return "no";
+        const isFollow = await this.isFollow(userData.id, followUserDTO.userId);
+        if (!isFollow) {
+            throw new HttpException(
+                { message: 'フォローしていません(カスタムメッセージ)', statusCode: 409 },
+                HttpStatus.CONFLICT,
+            );
+        }
+        const unfollowData = await this.prisma.follow.delete({
+            where: {
+                unique_follow_pair: {
+                    followUserId: userData.id,
+                    followedUserId: followUserDTO.userId
+                }
+            }
+        })
+        return unfollowData;
     }
-
 
 }
