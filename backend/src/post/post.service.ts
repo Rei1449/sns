@@ -125,13 +125,19 @@ export class PostService {
         return userPost;
     }
 
-
     async createPost(reatePostDTO:createPostDTO, userData: ReqUserInfo){
-        
+        let inputPost: any = {};
+        inputPost = {
+            content: reatePostDTO.content,
+            userId: userData.id
+        }
+        if (reatePostDTO.lat && reatePostDTO.long) {
+            inputPost.lat = reatePostDTO.lat;
+            inputPost.long = reatePostDTO.long;
+        }
         const newPost = await this.prismaService.post.create({
-            data:{
-                content: reatePostDTO.content,
-                userId: userData.id,
+            data: {
+                ...inputPost
             },
         });
         return newPost;

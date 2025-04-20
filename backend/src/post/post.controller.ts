@@ -31,7 +31,6 @@ export class PostController {
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthGuard) // 認証チェック
   async createPost(@Body() createPostDTO: createPostDTO, @Request() req: JwtPayload){
-    console.log("test");
     const user = req.user; // トークンから取得したユーザー情報
     const newPost = await this.postService.createPost(createPostDTO, user);
     return newPost;

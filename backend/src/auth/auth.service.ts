@@ -21,7 +21,6 @@ export class AuthService {
             throw new UnauthorizedException("パスワードとアカウントが一致しませんでした。");
             // throw new Error("不一致");
         }
-        console.log(user);
         const payload = { id: user.id, email: user.email };
         return {
             access_token: await this.jwtService.signAsync(payload),
