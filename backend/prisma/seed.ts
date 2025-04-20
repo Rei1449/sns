@@ -27,7 +27,7 @@ async function main() {
                         content: '今日はいい天気だ。散歩日和。',
                     },
                     {
-                        content: '明日は雨が降るらしい。洗濯物は干せないな。',
+                        content: '明日は雨が降るらしい。洗濯物は干せない。',
                     },
                     {
                         content: 'nest x prisma',

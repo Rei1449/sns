@@ -37,6 +37,63 @@ export class PostService {
                         id: true,
                         name: true,
                         // email: true,
+                        _count: {
+                            select: {
+                                followings: true,
+                                followers: true
+                            },
+                        }
+                    },
+                },
+            }
+        })
+        return posts;
+    }
+
+    async getFollowPosts(userId: number, beforeId?: string, beforeDate?: string) {
+        const whereClause: any = {};
+        if (beforeId) {
+            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
+        }
+        if (beforeDate) {
+            const parsed = new Date(beforeDate);
+            if (!isNaN(parsed.getTime())) {
+                whereClause.createdAt = {
+                    ...(whereClause.createdAt || {}),
+                    lt: parsed, //  「その日時以前」ならlte
+                };
+            }
+        }
+
+        const followings = await this.prismaService.follow.findMany({
+            where: {
+              followUserId: userId, // ログイン中のユーザーID
+            },
+            select: {
+                followedUserId: true,
+            },
+        });
+        const followedUserIds = followings.map(f => f.followedUserId);
+        whereClause.userId = {
+            in: followedUserIds
+        }
+
+        const posts = await this.prismaService.post.findMany({
+            where: whereClause,
+            orderBy: {updatedAt: 'desc'},
+            take: 5,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        // email: true,
+                        _count: {
+                            select: {
+                                followings: true,
+                                followers: true
+                            },
+                        }
                     },
                 },
             }
@@ -68,13 +125,19 @@ export class PostService {
         return userPost;
     }
 
-
     async createPost(reatePostDTO:createPostDTO, userData: ReqUserInfo){
-        
+        let inputPost: any = {};
+        inputPost = {
+            content: reatePostDTO.content,
+            userId: userData.id
+        }
+        if (reatePostDTO.lat && reatePostDTO.long) {
+            inputPost.lat = reatePostDTO.lat;
+            inputPost.long = reatePostDTO.long;
+        }
         const newPost = await this.prismaService.post.create({
-            data:{
-                content: reatePostDTO.content,
-                userId: userData.id,
+            data: {
+                ...inputPost
             },
         });
         return newPost;
