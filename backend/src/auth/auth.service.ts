@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
     constructor(
+        private prisma: PrismaService,
         private usersService: UsersService,
         private jwtService: JwtService
     ) {}
@@ -29,5 +30,49 @@ export class AuthService {
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         };
+    }
+
+    async getMyProfile(id: number) {
+        const user = this.prisma.user.findUnique({
+            where: {id},
+            select: {
+                id: true,
+                email: true,
+                createdAt: true,
+                updatedAt: true,
+                _count: {
+                    select: {
+                        followings: true,
+                        followers: true
+                    },
+                },
+                followings: {
+                    select: {
+                        followeds: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                },
+                followers: {
+                    select: {
+                        followings: {
+                            select: {
+                                id: true,
+                                name: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        if (!user) {
+            throw new UnauthorizedException('ユーザーが見つかりませんでした');
+        }
+
+        return user
     }
 }

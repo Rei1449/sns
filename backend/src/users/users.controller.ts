@@ -2,8 +2,8 @@ import { Body, Controller, Get, Post, Query, Request, UseGuards } from '@nestjs/
 import { UsersService } from './users.service';
 import { createAccountDTO } from 'src/dto/account.dto';
 import { JwtPayload } from 'src/types/user';
-import { AuthGuard } from '@nestjs/passport';
 import { followUserDTO } from 'src/dto/user.dto';
+import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('users')
 export class UsersController {

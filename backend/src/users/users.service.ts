@@ -52,7 +52,13 @@ export class UsersService {
                 name: true,
                 password: true,
                 createdAt: true,
-                updatedAt: true
+                updatedAt: true,
+                _count: {
+                    select: {
+                        followings: true,
+                        followers: true
+                    },
+                }
             },
         })
         return user;
@@ -65,7 +71,13 @@ export class UsersService {
                 id: true,
                 name: true,
                 createdAt: true,
-                updatedAt: true
+                updatedAt: true,
+                _count: {
+                    select: {
+                        followings: true,
+                        followers: true
+                    },
+                }
             },
         })
         return user;

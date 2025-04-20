@@ -17,10 +17,21 @@ export class PostController {
     return this.postService.getPosts(beforeId, beforeDate, userId);
   }
 
+  @Get('/follow')
+  @UseGuards(AuthGuard) // 認証チェック
+  async getFollowPosts(
+    @Request() req: JwtPayload,
+    @Query('beforeId') beforeId?: string,
+    @Query('beforeDate') beforeDate?: string
+  ) {
+    return this.postService.getFollowPosts(req.user.id, beforeId, beforeDate);
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthGuard) // 認証チェック
   async createPost(@Body() createPostDTO: createPostDTO, @Request() req: JwtPayload){
+    console.log("test");
     const user = req.user; // トークンから取得したユーザー情報
     const newPost = await this.postService.createPost(createPostDTO, user);
     return newPost;
@@ -51,7 +62,4 @@ export class PostController {
     return this.postService.getUserPost(Number(id));
   }
     
-    
-
-
 }
