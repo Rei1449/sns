@@ -2,11 +2,16 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { createPostDTO } from 'src/dto/post.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ReqUserInfo } from 'src/types/user';
+import { HttpService } from '@nestjs/axios';  // APIクライアント
+import { firstValueFrom } from 'rxjs';  // RxJS Observable → firstValueFrom()でPromise化
+import { ConfigService } from '@nestjs/config';  // envファイル関連
 
 @Injectable()
 export class PostService {
     constructor(
         private prismaService: PrismaService,
+        private readonly httpService: HttpService,
+        private configService: ConfigService
     ) {}
 
     async getPosts(beforeId?: string, beforeDate?: string, userId?: string) {
@@ -134,6 +139,13 @@ export class PostService {
         if (reatePostDTO.lat && reatePostDTO.long) {
             inputPost.lat = reatePostDTO.lat;
             inputPost.long = reatePostDTO.long;
+            // 緯度経度から都道府県
+            // RxJS Observable → firstValueFrom()でPromise化
+            const response = await firstValueFrom(
+                this.httpService.get(`https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder?output=json&lat=${reatePostDTO.lat}&long${reatePostDTO.long}&appid=${this.configService.get<string>('Yahoo_Client_Id')}`)
+            );
+            console.log(response.data);
+            // 開発ここから
         }
         const newPost = await this.prismaService.post.create({
             data: {
