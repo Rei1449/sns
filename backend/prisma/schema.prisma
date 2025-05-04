@@ -50,18 +50,22 @@ model Follow {
   // 同じモデル（User）を2回参照するリレーションを定義するとき、それぞれのリレーションにnameを付けて区別する
 }
 
+model Prefecture {
+  id Int @id @default(autoincrement())
+  name String
+
+  posts Post[]
+}
+
 model Post {
   id        Int      @id @default(autoincrement())
   content   String
-  lat       Float    @default(90.0)
-  long      Float    @default(0.0)
+  lat       Float    @default(36.05)
+  long      Float    @default(138.07)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   userId    Int
+  prefectureId Int  @default(20)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Test {
-  id   Int    @id @default(autoincrement())
-  name String
+  prefecture      Prefecture     @relation(fields: [prefectureId], references: [id], onDelete: Cascade)
 }
