@@ -13,7 +13,7 @@ type sendData = {
 export default function CreatePost() {
     const nav = useNavigate();
     const [cookies] = useCookies();
-    const formHook = useForm<sendData>({defaultValues:{userId:1, content:''}} );//本当はクッキーにuserIDが入る
+    const formHook = useForm<sendData>({defaultValues:{userId:cookies.user_id, content:''}} );
 
     // 投稿時の動作
     const onSubmitForm = async(data: sendData) => {
@@ -24,13 +24,13 @@ export default function CreatePost() {
 
         console.log(data);
         const res = await fetch('http://localhost:3001/posts', {
-                method:"POST",
-                headers: {
-                    'Authorization': 'Bearer ' + cookies.access_token,
-                    "Content-Type": "application/json",
-                },
-                body:JSON.stringify(data),
-            });
+                        method:"POST",
+                        headers: {
+                            'Authorization': 'Bearer ' + cookies.access_token,
+                            "Content-Type": "application/json",
+                        },
+                        body:JSON.stringify(data),
+                    });
         if (!res.ok) {
             console.log(res.statusText);
         }
