@@ -4,4 +4,6 @@ export class createPostDTO {
     //createdAt: Date;
     //updatedAt: Date;
     // userId: number;
+    lat?: number;
+    long?: number;
 }
