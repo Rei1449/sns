@@ -131,6 +131,7 @@ export class PostService {
     }
 
     async createPost(reatePostDTO:createPostDTO, userData: ReqUserInfo){
+        console.log("sss");
         let inputPost: any = {};
         inputPost = {
             content: reatePostDTO.content,
@@ -142,10 +143,12 @@ export class PostService {
             // 緯度経度から都道府県
             // RxJS Observable → firstValueFrom()でPromise化
             const response = await firstValueFrom(
-                this.httpService.get(`https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder?output=json&lat=${reatePostDTO.lat}&long${reatePostDTO.long}&appid=${this.configService.get<string>('Yahoo_Client_Id')}`)
+                this.httpService.get(`https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder?output=json&lat=${reatePostDTO.lat}&lon=${reatePostDTO.long}&appid=${this.configService.get<string>('Yahoo_Client_Id')}`)
             );
-            console.log(response.data);
+            console.log(response.data.Feature[0]);
+            console.log(response.data.Feature[0].Property.AddressElement[0]);
             // 開発ここから
+
         }
         const newPost = await this.prismaService.post.create({
             data: {
