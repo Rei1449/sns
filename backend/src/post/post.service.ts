@@ -65,9 +65,7 @@ export class PostService {
             let topLong = Number(long) + Number(dist)
             whereClause.lat = { gte: bottomLat, lte: topLat }
             whereClause.long = { gte: bottomLong, lte: topLong }
-            console.log(lat, long, dist)
         }
-        console.log('check')
 
         const posts = await this.getPostData(whereClause);
         return posts;
