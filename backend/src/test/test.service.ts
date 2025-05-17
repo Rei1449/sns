@@ -15,7 +15,6 @@ export class TestService {
             .from('test_sns')
             .select('*');
         if (error) throw new Error(error.message);
-        console.log(data);
         return data;
     }
 
@@ -26,7 +25,6 @@ export class TestService {
                 { "id": 3, "ok": true },
             ])
             .select();
-        console.log(data);
         return error;
     }
 

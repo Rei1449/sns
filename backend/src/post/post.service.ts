@@ -2,17 +2,46 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { createPostDTO } from 'src/dto/post.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ReqUserInfo } from 'src/types/user';
+import { HttpService } from '@nestjs/axios';  // APIクライアント
+import { firstValueFrom } from 'rxjs';  // RxJS Observable → firstValueFrom()でPromise化
+import { ConfigService } from '@nestjs/config';  // envファイル関連
 
 @Injectable()
 export class PostService {
     constructor(
         private prismaService: PrismaService,
+        private readonly httpService: HttpService,
+        private configService: ConfigService
     ) {}
 
-    async getPosts(beforeId?: string, beforeDate?: string, userId?: string) {
+    async getPostData(whereClause: any) {
+        const posts = await this.prismaService.post.findMany({
+            where: whereClause,
+            orderBy: {updatedAt: 'desc'},
+            take: 5,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        // email: true,
+                        _count: {
+                            select: {
+                                followings: true,
+                                followers: true
+                            },
+                        }
+                    },
+                },
+            }
+        })
+        return posts
+    }
+
+    async getPosts(beforeId?: string, beforeDate?: string, userId?: string, prefectureId?: string, lat?: string, long?: string, dist?: string) {
         const whereClause: any = {};
         if (beforeId) {
-            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
+            whereClause.id = { lt: Number(beforeId) };  // lteがgteだと以後 lteは以前 eを抜くとより前
         }
         if (beforeDate) {
             const parsed = new Date(beforeDate);
@@ -26,22 +55,69 @@ export class PostService {
         if (userId) {
             whereClause.userId = Number(userId);
         }
+        if (prefectureId) {
+            whereClause.prefectureId = Number(prefectureId)
+        }
+        if (lat && long && dist) {
+            let bottomLat = Number(lat) - Number(dist)
+            let bottomLong = Number(long) - Number(dist)
+            let topLat = Number(lat) + Number(dist)
+            let topLong = Number(long) + Number(dist)
+            whereClause.lat = { gte: bottomLat, lte: topLat }
+            whereClause.long = { gte: bottomLong, lte: topLong }
+        }
 
-        const posts = await this.prismaService.post.findMany({
-            where: whereClause,
-            orderBy: {updatedAt: 'desc'},
-            take: 5,
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                        // email: true,
-                    },
-                },
-            }
-        })
+        const posts = await this.getPostData(whereClause);
         return posts;
+    }
+
+    async getFollowPosts(userId: number, beforeId?: string, beforeDate?: string) {
+        const whereClause: any = {};
+        if (beforeId) {
+            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
+        }
+        if (beforeDate) {
+            const parsed = new Date(beforeDate);
+            if (!isNaN(parsed.getTime())) {
+                whereClause.createdAt = {
+                    ...(whereClause.createdAt || {}),
+                    lt: parsed, //  「その日時以前」ならlte
+                };
+            }
+        }
+
+        const followings = await this.prismaService.follow.findMany({
+            where: {
+              followUserId: userId, // ログイン中のユーザーID
+            },
+            select: {
+                followedUserId: true,
+            },
+        });
+        const followedUserIds = followings.map(f => f.followedUserId);
+        whereClause.userId = {
+            in: followedUserIds
+        }
+
+        const posts = await this.getPostData(whereClause);
+        return posts;
+    }
+
+    async getPrefecturePost(prefectureId: number, beforeId?: string, beforeDate?: string) {
+        const whereClause: any = {};
+        if (beforeId) {
+            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
+        }
+        if (beforeDate) {
+            const parsed = new Date(beforeDate);
+            if (!isNaN(parsed.getTime())) {
+                whereClause.createdAt = {
+                    ...(whereClause.createdAt || {}),
+                    lt: parsed, //  「その日時以前」ならlte
+                };
+            }
+        }
+        const posts = await this.getPostData(whereClause);
     }
 
     async getAllPost(){
@@ -68,13 +144,31 @@ export class PostService {
         return userPost;
     }
 
-
     async createPost(reatePostDTO:createPostDTO, userData: ReqUserInfo){
-        
+        let inputPost: any = {};
+        inputPost = {
+            content: reatePostDTO.content,
+            userId: userData.id
+        }
+        if (reatePostDTO.lat && reatePostDTO.long) {
+            inputPost.lat = reatePostDTO.lat;
+            inputPost.long = reatePostDTO.long;
+            // 緯度経度から都道府県
+            // RxJS Observable → firstValueFrom()でPromise化
+            const response = await firstValueFrom(
+                this.httpService.get(`https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder?output=json&lat=${reatePostDTO.lat}&lon=${reatePostDTO.long}&appid=${this.configService.get<string>('Yahoo_Client_Id')}`)
+            );
+            const prefectureId = response.data.Feature[0].Property.AddressElement[0].Code
+            inputPost = {
+                ...inputPost,
+                prefectureId: Number(prefectureId),
+                lat: reatePostDTO.lat,
+                long: reatePostDTO.long
+            }
+        }
         const newPost = await this.prismaService.post.create({
-            data:{
-                content: reatePostDTO.content,
-                userId: userData.id,
+            data: {
+                ...inputPost
             },
         });
         return newPost;
@@ -98,5 +192,4 @@ export class PostService {
         })
         return deletePost;
         }
-
 }
