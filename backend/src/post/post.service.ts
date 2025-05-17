@@ -14,24 +14,7 @@ export class PostService {
         private configService: ConfigService
     ) {}
 
-    async getPosts(beforeId?: string, beforeDate?: string, userId?: string) {
-        const whereClause: any = {};
-        if (beforeId) {
-            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
-        }
-        if (beforeDate) {
-            const parsed = new Date(beforeDate);
-            if (!isNaN(parsed.getTime())) {
-                whereClause.createdAt = {
-                    ...(whereClause.createdAt || {}),
-                    lt: parsed, //  「その日時以前」ならlte
-                };
-            }
-        }
-        if (userId) {
-            whereClause.userId = Number(userId);
-        }
-
+    async getPostData(whereClause: any) {
         const posts = await this.prismaService.post.findMany({
             where: whereClause,
             orderBy: {updatedAt: 'desc'},
@@ -52,6 +35,41 @@ export class PostService {
                 },
             }
         })
+        return posts
+    }
+
+    async getPosts(beforeId?: string, beforeDate?: string, userId?: string, prefectureId?: string, lat?: string, long?: string, dist?: string) {
+        const whereClause: any = {};
+        if (beforeId) {
+            whereClause.id = { lt: Number(beforeId) };  // lteがgteだと以後 lteは以前 eを抜くとより前
+        }
+        if (beforeDate) {
+            const parsed = new Date(beforeDate);
+            if (!isNaN(parsed.getTime())) {
+                whereClause.createdAt = {
+                    ...(whereClause.createdAt || {}),
+                    lt: parsed, //  「その日時以前」ならlte
+                };
+            }
+        }
+        if (userId) {
+            whereClause.userId = Number(userId);
+        }
+        if (prefectureId) {
+            whereClause.prefectureId = Number(prefectureId)
+        }
+        if (lat && long && dist) {
+            let bottomLat = Number(lat) - Number(dist)
+            let bottomLong = Number(long) - Number(dist)
+            let topLat = Number(lat) + Number(dist)
+            let topLong = Number(long) + Number(dist)
+            whereClause.lat = { gte: bottomLat, lte: topLat }
+            whereClause.long = { gte: bottomLong, lte: topLong }
+            console.log(lat, long, dist)
+        }
+        console.log('check')
+
+        const posts = await this.getPostData(whereClause);
         return posts;
     }
 
@@ -83,27 +101,25 @@ export class PostService {
             in: followedUserIds
         }
 
-        const posts = await this.prismaService.post.findMany({
-            where: whereClause,
-            orderBy: {updatedAt: 'desc'},
-            take: 5,
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                        // email: true,
-                        _count: {
-                            select: {
-                                followings: true,
-                                followers: true
-                            },
-                        }
-                    },
-                },
-            }
-        })
+        const posts = await this.getPostData(whereClause);
         return posts;
+    }
+
+    async getPrefecturePost(prefectureId: number, beforeId?: string, beforeDate?: string) {
+        const whereClause: any = {};
+        if (beforeId) {
+            whereClause.id = { lt: Number(beforeId) };  // lteがdteだと以後 lteは以前 eを抜くとより前
+        }
+        if (beforeDate) {
+            const parsed = new Date(beforeDate);
+            if (!isNaN(parsed.getTime())) {
+                whereClause.createdAt = {
+                    ...(whereClause.createdAt || {}),
+                    lt: parsed, //  「その日時以前」ならlte
+                };
+            }
+        }
+        const posts = await this.getPostData(whereClause);
     }
 
     async getAllPost(){
@@ -131,7 +147,6 @@ export class PostService {
     }
 
     async createPost(reatePostDTO:createPostDTO, userData: ReqUserInfo){
-        console.log("sss");
         let inputPost: any = {};
         inputPost = {
             content: reatePostDTO.content,
@@ -145,10 +160,13 @@ export class PostService {
             const response = await firstValueFrom(
                 this.httpService.get(`https://map.yahooapis.jp/geoapi/V1/reverseGeoCoder?output=json&lat=${reatePostDTO.lat}&lon=${reatePostDTO.long}&appid=${this.configService.get<string>('Yahoo_Client_Id')}`)
             );
-            console.log(response.data.Feature[0]);
-            console.log(response.data.Feature[0].Property.AddressElement[0]);
-            // 開発ここから
-
+            const prefectureId = response.data.Feature[0].Property.AddressElement[0].Code
+            inputPost = {
+                ...inputPost,
+                prefectureId: Number(prefectureId),
+                lat: reatePostDTO.lat,
+                long: reatePostDTO.long
+            }
         }
         const newPost = await this.prismaService.post.create({
             data: {

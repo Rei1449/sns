@@ -12,9 +12,13 @@ export class PostController {
   async getPosts(
     @Query('beforeId') beforeId?: string,
     @Query('beforeDate') beforeDate?: string,
-    @Query('userId') userId?: string
+    @Query('userId') userId?: string,
+    @Query('prefId') prefectureId?: string,
+    @Query('lat') lat?: string,
+    @Query('long') long?: string,
+    @Query('dist') dist?: string,
   ) {
-    return this.postService.getPosts(beforeId, beforeDate, userId);
+    return this.postService.getPosts(beforeId, beforeDate, userId, prefectureId, lat, long, dist);
   }
 
   @Get('/follow')

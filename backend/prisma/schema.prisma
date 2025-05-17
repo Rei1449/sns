@@ -60,12 +60,12 @@ model Prefecture {
 model Post {
   id        Int      @id @default(autoincrement())
   content   String
-  lat       Float    @default(36.05)
-  long      Float    @default(138.07)
+  lat       Float    @default(0.0)
+  long      Float    @default(0.0)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   userId    Int
-  prefectureId Int  @default(20)
+  prefectureId Int  @default(48)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   prefecture      Prefecture     @relation(fields: [prefectureId], references: [id], onDelete: Cascade)
 }
